@@ -1,0 +1,41 @@
+{% if teleport %}
+    <template x-teleport="body">
+    {% endif %}
+    <div x-bind="modalBindings('{{ name }}')"
+         style="display: none"
+         class="fixed inset-0 z-10 overflow-y-auto">
+        <div x-show="open"
+             x-transition.opacity
+             class="fixed inset-0 bg-white bg-opacity-10 backdrop-blur-xl">
+        </div>
+        <div x-show="open"
+             x-transition
+             class="relative flex items-center justify-center min-h-screen p-4">
+            <div x-on:click.stop
+                 x-trap.noscroll.inert="open"
+                 class="relative w-full overflow-y-auto">
+                <div class="container grid grid-cols-12 py-12 mx-auto">
+                    <div class="relative col-span-full lg:col-span-10 lg:col-start-2 xl:col-span-8 xl:col-start-3 bg-white border shadow-lg {{ border_color }} rounded-xl">
+                        <div @click="open = false; {{ on_close }}"
+                             class="absolute flex items-center justify-end cursor-pointer top-5 right-7">
+                            <span class="mr-3 text-xs font-bold">Chiudi</span>
+                            <svg width="28"
+                                 height="28"
+                                 viewBox="0 0 28 28"
+                                 fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14 0C6.2 0 0 6.2 0 14C0 21.8 6.2 28 14 28C21.8 28 28 21.8 28 14C28 6.2 21.8 0 14 0ZM19.4 21L14 15.6L8.6 21L7 19.4L12.4 14L7 8.6L8.6 7L14 12.4L19.4 7L21 8.6L15.6 14L21 19.4L19.4 21Z" fill="black" />
+                            </svg>
+                        </div>
+                        <div class="p-8">
+                            {% block slot_content %}
+                            {% endblock slot_content %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if teleport %}
+    </template>
+{% endif %}

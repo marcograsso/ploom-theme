@@ -1,0 +1,18 @@
+<div class="mb-6 {{ classes }}">
+    <select id="{{ name }}"
+            name="{{ name }}"
+            x-validate.required="$el.value != '{{ label }}'"
+            class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-accent focus:border-accent block w-full p-2.5">
+        <option>
+            {{ label }}
+        </option>
+        {% for option in options %}
+            <option value="{{ option }}">
+                {{ option }}
+            </option>
+        {% endfor %}
+    </select>
+    <div class="error-msg">
+        Campo obbligatorio
+    </div>
+</div>

@@ -1,0 +1,32 @@
+{# Mail per quando un utente segna l'opzione Talenti nel form di BIS #}
+
+{% extends "emails/base.mjml.twig" %}
+
+{% block head %}
+<mj-style inline="inline">
+  .link {
+    color: #e52321;
+  }
+</mj-style>
+{% endblock %}
+
+{% block content %}
+<mj-image src="{{ theme.link }}/assets/images/logo-b4t.png" alt="B4T - Bologna for Talent" width="128px" align="left" />
+<mj-text>
+  <p>
+    <strong>Salve {{ user.hr_contact_name }}</strong>,
+  </p>
+  <p>
+    riceve questa mail perché, in fase di adesione a BIS - Bologna Innovation Square, la sua impresa {{ user.company_name }} ha dimostrato interesse per <a class="link" href="https://www.investinbologna.it/Home/Per_i_talenti">Bologna for Talent</a>, il servizio gratuito della Città metropolitana e del Comune di Bologna dedicato a supportare imprese e centri di ricerca nell’attrazione e retention di talenti nazionali e internazionali a elevata specializzazione di conoscenze e competenze, in una logica di innovazione del sistema economico.
+  </p>
+  <p>
+    Il team di Bologna for Talent è disponibile per un maggiore approfondimento. Nel caso sia di suo interesse, può contattare direttamente Bologna for Talent alla seguente email: <a class="link" href="mailto:fortalent@cittametropolitana.bo.it">fortalent@cittametropolitana.bo.it</a>
+  </p>
+  <p>
+    Per i servizi di accompagnamento dei talenti neoassunti e per partecipare alle iniziative di attrazione e retention dei talenti, <a class="link" href="{{ get_post(171).link }}?id={{ user.tax_id_or_fiscal_code }}&flow=update">clicca qui</a>.
+  </p>
+</mj-text>
+<mj-button href="{{ get_post(171).link }}?id={{ user.tax_id_or_fiscal_code }}&flow=update" background-color="#e52321" color="white" align="left" font-weight="700" border-radius="24px">
+  Aderisci a Bologna for Talent
+</mj-button>
+{% endblock %}

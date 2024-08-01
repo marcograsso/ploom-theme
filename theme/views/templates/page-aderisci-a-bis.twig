@@ -1,0 +1,261 @@
+{% set title = post.title %}
+{% set description = "" %}
+{% set image_url = theme.link ~ "/assets/images/share-bis.png" %}
+{% set favicon_url = theme.link ~ "/assets/images/favicon-bis.svg" %}
+
+{% extends "layouts/base.twig" %}
+{% block content %}
+    <div class="alex-grid">
+        <div id="decorations"
+             class="absolute inset-0 pointer-events-none -z-10">
+            {% include "components/star.twig" with {
+            container_classes: "absolute top-[var(--star-1)]",
+            star_classes: "hidden lg:block col-span-2 xl:col-span-3 w-full translate-x-[calc(-50%-0.75rem)] translate-y-[-50%]"}
+            %}
+            {% include "components/star.twig" with {
+            container_classes: "absolute top-[var(--star-2)] translate-y-[-100%]",
+            star_classes: "hidden xl:block col-span-1 w-full"}
+            %}
+            {% include "components/star.twig" with {
+            container_classes: "absolute top-[var(--star-3)]",
+            star_classes: "hidden lg:block col-span-2 col-start-11 xl:col-span-3 w-full xl:col-start-10 translate-x-[calc(50%+0.75rem)] translate-y-[-100%]"}
+            %}
+        </div>
+        <div class="alex-col">
+            {% include "components/form-hero.twig" with {logo: "components/logo-bis.twig", classes: "component-accent-bis"} %}
+            <form source="bis"
+                flow="create"
+                x-data="formAdesione()"
+                x-validate
+                x-ref="form"
+                {# x-init="setInterval(() => console.log(Alpine.raw(onlyInvalids($formData))), 1000)" #}
+                @submit.prevent="submit($event)">
+                <h4 class="mt-16">
+                    Adesione al network
+                </h4>
+                <p id="subtitle"
+                   class="mt-4 mb-8 text-body-medium">
+                    Per la creazione di una piazza dell’innovazione finalizzata alla promozione di pratiche di innovazione aperta e condivisa nel territorio metropolitano di Bologna.
+                </p>
+                <fieldset class="form-group"
+                          name="details">
+                    {% include "components/input.twig" with {name: "full_name", classes: "component-accent-bis col-span-full md:col-span-4", label: "Il/La sottoscritto/a", placeholder: "Nome e cognome"} %}
+                    {% include "components/input.twig" with {name: "company_name", classes: "component-accent-bis col-span-full md:col-span-4", label: "Come titolare e/o legale rappresentante di", placeholder: "Nome dell’azienda"} %}
+                    {% include "components/input.twig" with {name: "tax_id_or_fiscal_code", classes: "component-accent-bis col-span-full md:col-span-3", label: "Partita IVA / Codice fiscale", placeholder: "Numero di P.IVA o codice fiscale"} %}
+                    {% include "components/input.twig" with {name: "city", classes: "component-accent-bis col-span-full md:col-span-3", label: "Con sede a", placeholder: "Città"} %}
+                    {% include "components/input.twig" with {name: "province", classes: "component-accent-bis col-span-4 md:col-auto", label: "Provincia", placeholder: "-"} %}
+                    {% include "components/input.twig" with {name: "zip_code", classes: "component-accent-bis col-span-4 md:col-auto", label: "CAP", placeholder: "40033", mask: "99999"} %}
+                    {% include "components/input.twig" with {name: "street_address", classes: "component-accent-bis col-span-6 md:col-span-3", label: "In via", placeholder: "Via"} %}
+                    {% include "components/input.twig" with {name: "street_number", classes: "component-accent-bis col-span-2 md:col-span-1", label: "Civico", placeholder: "N."} %}
+                    {% include "components/input.twig" with {name: "email", classes: "component-accent-bis col-span-full md:col-span-4", type: "email", label: "Email", placeholder: "es. nome.cognome@email.com"} %}
+                    {% embed "components/checkbox.twig" with {classes: "component-accent-black col-span-full md:col-span-5 ml-[-12px]", name: "declare_bologna_location"} %}
+                        {% block slot_content %}
+                            <label class="mt-px cursor-pointer select-none"
+                                   for="{{ name }}">
+                                <div class="block font-sans text-sm font-normal leading-normal">
+                                    Dichiaro che almeno una sede si trova nell'<strong>area metropolitana di Bologna</strong> e precisamente nel comune di:
+                                </div>
+                            </label>
+                        {% endblock slot_content %}
+                    {% endembed %}
+                    {% include "components/select.twig" with {name: "bologna_municipality_selection", classes: "col-span-full mt-4 md:mt-0 md:col-span-3 component-accent-bis", label: "Scegli un comune", options: comuni} %}
+                </fieldset>
+                {% embed "components/accordion.twig" with {background_color: "bg-bis", text_color: "text-bis", title: "Dichiara"} only %}
+                    {% block slot_content %}
+                        <p>
+                            di aderire a <strong>Bologna Innovation Square</strong>, la piattaforma dell’innovazione del territorio metropolitano che ha l’obiettivo di sviluppare sinergie e progettualità condivise in grado di consolidare e rafforzare l’innovazione del sistema economico territoriale, e riconoscere e condividere i valori e gli obiettivi della piattaforma così come individuati nelle
+                            <a href="https://www.bolognainnovationsquare.it/Engine/RAServeFile.php/f/Il_Progetto.pdf"
+                               target="_blank"
+                               class="underline"
+                               rel="noopener noreferrer">linee operative di progetto</a>.
+                        </p>
+                        <div class="mt-4"
+                             x-data="{message: '<strong>A Bologna Innovation Square</strong> aderiscono imprese, startup, centri per l’innovazione e la ricerca, professionisti e associazioni attivi nel sistema dell’innovazione che hanno sede o svolgono la propria azione sul territorio metropolitano di <strong>Bologna</strong> e che condividono l’interesse ad avviare progetti ad impatto innovativo con ricadute sul territorio'}">
+                            <template x-ref="template">
+                                <p x-html="message">
+                                </p>
+                            </template>
+                            e pertanto di entrare a <span class="underline cursor-pointer"
+       x-tooltip.interactive="{ content: () => $refs.template.innerHTML, allowHTML: true, appendTo: $root }">far parte</span> del <strong>network di produttori e fruitori di innovazione di BIS</strong>, lavorando in sinergia con gli altri nodi della rete sui temi comuni e perseguendo obiettivi strategici condivisi;
+                        </div>
+                        {% embed "components/checkbox.twig" with {classes: "component-accent-black ml-[-12px]", name: "has_read_declarations"} %}
+                            {% block slot_content %}
+                                <label class="cursor-pointer select-none"
+                                       for="{{ name }}">
+                                    <div class="block mt-1 font-sans text-sm font-normal leading-normal">
+                                        Ho letto
+                                    </div>
+                                </label>
+                            {% endblock slot_content %}
+                        {% endembed %}
+                    {% endblock slot_content %}
+                {% endembed %}
+                {% include "components/star.twig" with {
+                container_classes: "px-6 mt-20 lg:mt-0",
+                star_classes: "lg:hidden col-span-full"}
+                %}
+                {% embed "components/accordion.twig" with {background_color: "bg-bis", text_color: "text-bis", title: "Dichiara inoltre"} %}
+                    {% block slot_content %}
+                        <div class="[&>ul]:list-disc [&>ul]:ms-[22px] mb-6">
+                            {{ post.dichiarazione_di_interesse }}
+                            {% embed "components/checkbox.twig" with {classes: "mt-3 component-accent-black", name: "has_read_declaration_of_interests"} %}
+                                {% block slot_content %}
+                                    <label class="cursor-pointer select-none"
+                                           for="{{ name }}">
+                                        <div class="block mt-1 font-sans text-sm font-normal leading-normal">
+                                            Ho letto
+                                        </div>
+                                    </label>
+                                {% endblock slot_content %}
+                            {% endembed %}
+                        </div>
+                        <p class="mb-3">
+                            A tal fine, si segnala in particolare, ma non in via esclusiva, il riferimento ai seguenti ambiti di interesse (selezionare uno o più):
+                        </p>
+                        {% include "components/checkbox.twig" with {
+                        classes: "component-accent-cerulean-blue", name: "digitalization_impact_checkbox", optional: true, label: "Impatto del Tecnopolo e digitalizzazione"
+                        } %}
+                        {% include "components/checkbox.twig" with {classes: "component-accent-jade-green", name: "eco_innovation_checkbox", optional: true, label: "Innovazione per la Transizione ecologica"} %}
+                        <div x-data="{ open: false }">
+                            {% include "components/checkbox.twig" with {classes: "component-accent-torch-red", on_change: "open = $event.target.checked", name: "talent_attraction_checkbox", optional: true, label: "Attrazione e retention di talenti"} %}
+                            {% embed "components/modal.twig" with {name: "talent_modal", border_color: "border-b4t", on_close: "$validate.isComplete($refs.hr_fields) ? null : $formData.talent_attraction_checkbox.node.checked = false"} %}
+                                {% block slot_content %}
+                                    <div class="form-group">
+                                        <img class="col-span-2 px-5"
+                                             src="{{ theme.link }}/assets/images/logo-b4t.png">
+                                    </div>
+                                    <p class="mt-3 text-5xl">
+                                        Sei stato invitato a <strong>Bologna for talent</strong>!
+                                    </p>
+                                    <p class="mt-4 text-body-small">
+                                        Indica la mail di un/una referente (possibilmente dell'area HR/Talent Acquisition) a cui inoltrare le informazioni relative al servizio dedicato all'accompagnamento e all'attrazione di talenti nazionali o internazionali a elevata specializzazione di conoscenze e competenze.
+                                    </p>
+                                    <fieldset class="mt-10 form-group"
+                                              x-ref="hr_fields">
+                                        {% include "components/input.twig" with {name: "hr_contact_name", classes: "component-accent-b4t col-span-4", label: "Nome e cognome del referente operativo / HR", placeholder: "Nome e cognome"} %}
+                                        {% include "components/input.twig" with {name: "hr_contact_email", classes: "component-accent-b4t col-span-4", label: "Email del referente operativo / HR", placeholder: "Inserisci email", type: "email"} %}
+                                    </fieldset>
+                                    <div class="form-group">
+                                        <button type="button"
+                                                @click="$validate.isComplete($refs.hr_fields) ? open = false : null"
+                                                class="col-span-3 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mt-8 col-start-6">
+                                            Conferma
+                                        </button>
+                                    </div>
+                                {% endblock slot_content %}
+                            {% endembed %}
+                        </div>
+                        {% include "components/checkbox.twig" with {classes: "component-accent-sin-yellow", name: "new_entrepreneurship_checkbox", optional: true, label: "Nuova imprenditoria"} %}
+                    {% endblock slot_content %}
+                {% endembed %}
+                {% embed "components/accordion.twig" with {background_color: "bg-bis", text_color: "text-bis", id: "dichiara_inoltre", title: "Dichiara inoltre"} only %}
+                    {% block slot_content %}
+                        <fieldset x-data="{checked: false}">
+                            {% embed "components/checkbox.twig" with {on_change: "checked = $event.target.checked; updateField('#networks_specification');", classes: "component-accent-black", optional: true, name: "belongs_to_networks"} %}
+                                {% block slot_content %}
+                                    <label class="mt-px cursor-pointer select-none"
+                                           for="{{ name }}">
+                                        <div class="block font-sans text-sm font-normal leading-normal">
+                                            di essere già parte di uno o più network/progetti di Città metropolitana e Comune di Bologna (a titolo esemplificativo clubPRO, Forum degli spazi metropolitani per l’innovazione, Bologna for Talent, altri)
+                                        </div>
+                                    </label>
+                                {% endblock slot_content %}
+                            {% endembed %}
+                            <div class="form-group pl-[43px] mt-4">
+                                {% set params = {
+                                    "name": "networks_specification",
+                                    "optional": true,
+                                    "classes": "component-accent-bis col-span-full md:col-span-4",
+                                    "label": "Se sì, specificare quale",
+                                    "validate": "checked == true",
+                                    "error_message": "Devi spuntare la casella sopra",
+                                    "placeholder": "es. nome del network"
+                                } %}
+                                {% include "components/input.twig" with params %}
+                            </div>
+                        </fieldset>
+                        <fieldset x-data="{checked: false}">
+                            {% embed "components/checkbox.twig" with {on_change: "checked = $event.target.checked; updateField('#upcoming_initiatives');", classes: "component-accent-black", optional: true, name: "project_dissemination_availability"} %}
+                                {% block slot_content %}
+                                    <label class="mt-px cursor-pointer select-none"
+                                           for="{{ name }}">
+                                        <div class="block font-sans text-sm font-normal leading-normal">
+                                            di essere disponibile a favorire quanto più possibile la diffusione interna ed esterna del progetto, anche attraverso l'inserimento di  BIS - Bologna Innovation Square nei propri eventi, con particolare riferimento a quelli con focus sui temi dell’innovazione e in generale gli ambiti di intervento della piattaforma.
+                                        </div>
+                                    </label>
+                                {% endblock slot_content %}
+                            {% endembed %}
+                            <div class="form-group pl-[43px] mt-4">
+                                {% set params = {
+                                    "name": "upcoming_initiatives",
+                                    "optional": true,
+                                    "classes": "component-accent-bis col-span-full md:col-span-4",
+                                    "label": "Se sì, elencare le eventuali iniziative già in programma",
+                                    "validate": "checked == true",
+                                    "error_message": "Devi spuntare la casella sopra",
+                                    "placeholder": "es. nome dell’iniziativa"
+                                } %}
+                                {% include "components/input.twig" with params %}
+                            </div>
+                        </fieldset>
+                    {% endblock slot_content %}
+                {% endembed %}
+                {% embed "components/accordion.twig" with {background_color: "bg-bis", text_color: "text-bis", title: "Individua"} only %}
+                    {% block slot_content %}
+                        <p>
+                            quale referente operativo e di contatto per BIS Bologna Innovation Square
+                        </p>
+                        <fieldset class="mt-4 form-group"
+                                  name="representative_details">
+                            {% include "components/input.twig" with {name: "operational_contact_name", classes: "component-accent-bis col-span-full md:col-span-4", label: "Referente operativo", placeholder: "Nome e cognome"} %}
+                            {% include "components/input.twig" with {name: "operational_contact_role", classes: "component-accent-bis col-span-full md:col-span-4", label: "Ruolo in azienda", placeholder: "es. Manager"} %}
+                            {% include "components/input.twig" with {name: "operational_contact_email", type: "email", classes: "component-accent-bis col-span-full md:col-span-4", label: "Email", placeholder: "es. nome.cognome@email.com"} %}
+                            {% include "components/input.twig" with {name: "operational_contact_phone", classes: "component-accent-bis col-span-full md:col-span-4", label: "Telefono", placeholder: "es. +39 000 00 00 000"} %}
+                        </fieldset>
+                    {% endblock slot_content %}
+                {% endembed %}
+                {% embed "components/accordion.twig" with {background_color: "bg-bis", text_color: "text-bis", title: "e acconsente"} %}
+                    {% block slot_content %}
+                        <div class="flex flex-col space-y-3">
+                            {% embed "components/checkbox.twig" with {classes: "component-accent-black", name: "data_processing_consent"} %}
+                                {% block slot_content %}
+                                    <label class="mt-px cursor-pointer select-none"
+                                           for="{{ name }}">
+                                        <div class="block font-sans text-sm font-normal leading-normal">
+                                            {{ post.consents.privacy_consent_1_text }}
+                                        </div>
+                                    </label>
+                                {% endblock slot_content %}
+                            {% endembed %}
+                            {% embed "components/checkbox.twig" with {classes: "component-accent-black", optional: true, name: "newsletter_consent"} %}
+                                {% block slot_content %}
+                                    <label class="mt-px cursor-pointer select-none"
+                                           for="{{ name }}">
+                                        <div class="block font-sans text-sm font-normal leading-normal">
+                                            {{ post.consents.newsletter_consent_text }}
+                                        </div>
+                                    </label>
+                                {% endblock slot_content %}
+                            {% endembed %}
+                        </div>
+                    {% endblock slot_content %}
+                {% endembed %}
+                {% include "components/form-recap.twig" %}
+                <div class="flex justify-center mt-20">
+                    <button type="submit"
+                            :disabled="!$validate.isComplete($refs.form) || disableSubmit"
+                            class="submit-button bg-bis hover:bg-bis-600 focus:ring-bis-600">
+                        Invia richiesta
+                    </button>
+                </div>
+                {% include "components/star.twig" with {
+                container_classes: "mt-20",
+                star_classes: "lg:hidden col-span-2 col-start-2"}
+                %}
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block footer %}
+    {% include "components/footer.twig" %}
+{% endblock footer %}

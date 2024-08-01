@@ -1,0 +1,23 @@
+<div class="mb-6 {{ classes }}">
+    <label for="{{ name }}"
+           class="block mb-2 font-medium">
+        {{ label }}
+    </label>
+    <input type="{{ type|default('text') }}"
+           id="{{ name }}"
+           name="{{ name }}"
+           class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-accent focus:border-accent block w-full p-2.5"
+           placeholder="{{ placeholder }}"
+           autocomplete="off"
+           data-1p-ignore
+           {{ mask ? 'x-mask="' ~ mask ~ '"' : "" }}
+           {{ mask_dynamic ? 'x-mask:dynamic="' ~ mask ~ '"' : "" }}
+           {{ validate ? 'x-validate="' ~ validate ~ '"' : "" }}
+           {{ optional ? "" : "required" }}
+           {{ dynamic_disabled ? ':disabled="' ~ dynamic_disabled ~ '"' : "" }}
+           {{ dynamic_classes ? ':class="' ~ dynamic_classes ~ '"' : "" }}
+           />
+    <div class="error-msg">
+	    {{ error_message ? error_message : "Campo obbligatorio" }}
+    </div>
+</div>

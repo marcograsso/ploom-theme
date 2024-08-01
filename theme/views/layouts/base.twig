@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html {{ site.language_attributes }}>
+    {% block head %}
+        {% include "partials/head.twig" %}
+    {% endblock head %}
+    <body class="{{ body_class }} antialiased overflow-x-hidden">
+        {{ function("wp_body_open") }}
+        {# {% include "components/tailwind-debugger.twig" %}
+        {% include "components/form-debugger.twig" %} #}
+        <main class="relative mt-12 mb-32">
+            {% block content %}
+            {% endblock content %}
+        </main>
+        {% block footer %}
+        {% endblock footer %}
+        {{ function("wp_footer") }}
+        {% do action('get_footer') %}
+    </body>
+</html>

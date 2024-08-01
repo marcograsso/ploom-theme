@@ -1,0 +1,104 @@
+<div class="border border-[#868686] grid grid-rows-2 grid-cols-1 lg:grid-cols-2 lg:grid-rows-none p-6 lg:p-12 gap-20 lg:gap-40 justify-center mt-20 rounded-3xl relative"
+     :class="state == 'success' && 'success' || state == 'error' && 'error'">
+    <div id="result"
+         class="absolute inset-0 z-30 flex flex-col items-center justify-center pb-6 text-xl text-center rounded-3xl"
+         x-show="state == 'success' || state == 'error'"
+         x-transition>
+        <svg xmlns="http://www.w3.org/2000/svg"
+             fill="none"
+             viewBox="0 0 24 24"
+             stroke-width="1.5"
+             stroke="currentColor"
+             class="mb-4 size-16"
+             x-show="state == 'success'">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+        </svg>
+        <p class="max-w-md px-4"
+           x-show="state == 'success'">
+            Grazie per aver compilato il form. Abbiamo ricevuto la tua richiesta di adesione!
+        </p>
+        <svg xmlns="http://www.w3.org/2000/svg"
+             fill="none"
+             viewBox="0 0 24 24"
+             stroke-width="1.5"
+             stroke="currentColor"
+             class="mb-4 size-16"
+             x-show="state == 'error'">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+        </svg>
+        <p class="max-w-md px-4"
+           x-show="state == 'error'">
+            Purtroppo qualcosa è andato storto durante l'invio del form <span x-text="`(${message})`"></span>. Riprova!
+        </p>
+    </div>
+    <div class="w-full mx-auto lg:w-auto">
+        <h6>
+            Hai mostrato interesse per
+            <br>
+            i seguenti argomenti
+        </h6>
+        <ul class="mt-3 space-y-1 list-inside list-check">
+            <li class="font-medium text-body-small"
+                :class="$formData.digitalization_impact_checkbox.value ? 'text-cerulean-blue' : 'text-black/10'">
+                Impatto del Tecnopolo e digitalizzazione
+            </li>
+            <li class="font-medium text-body-small"
+                :class="$formData.eco_innovation_checkbox.value ? 'text-jade-green' : 'text-black/10'">
+                Innovazione per la Transizione ecologica
+            </li>
+            <li class="font-medium text-body-small"
+                :class="$formData.talent_attraction_checkbox.value ? 'text-torch-red' : 'text-black/10'">
+                Attrazione e retention di talenti
+            </li>
+            <li class="font-medium text-body-small"
+                :class="$formData.new_entrepreneurship_checkbox.value ? 'text-sin-yellow' : 'text-black/10'">
+                Nuova imprenditoria
+            </li>
+        </ul>
+    </div>
+    <svg class="hidden panel-separator lg:block"
+         width="12"
+         height="153"
+         viewBox="0 0 12 153"
+         fill="none"
+         xmlns="http://www.w3.org/2000/svg">
+        <path d="M11 0V104.5L1 116L11 129V152.5" stroke="currentColor" />
+    </svg>
+    <svg class="w-[calc(100%-3rem)] lg:hidden panel-separator panel-separator--offset-0"
+         xmlns="http://www.w3.org/2000/svg"
+         fill="none"
+         viewBox="0 0 286 12">
+        <path stroke="currentColor" d="M286 1H52.5L41 11 28 1H0" />
+    </svg>
+    <div class="w-full mx-auto lg:w-auto">
+        <h6 class="mb-3 text-bis">
+            Verrà inviato un promemoria
+            <br>
+            ai seguenti questi indirizzi
+        </h6>
+        <p class="font-medium text-body-small"
+           x-text="$formData.email.value">
+        </p>
+        <p class="font-medium text-body-small"
+           x-text="$formData.hr_contact_email.value"
+           x-show="$formData.talent_attraction_checkbox.value">
+        </p>
+        <div class="flex items-start mt-5"
+             x-show="$formData.talent_attraction_checkbox.value">
+            <svg class="mr-3 text-bis shrink-0"
+                 width="28"
+                 height="25"
+                 viewBox="0 0 28 25"
+                 fill="none"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M13.3439 8.89595L24.7485 1.48266H1.93932L13.3439 8.89595ZM13.3439 10.5506L1.48266 2.79481V18.3627C1.48266 18.6286 1.56816 18.8471 1.73916 19.0181C1.91016 19.1891 2.1291 19.2746 2.39598 19.2746H9.48901L10.9717 20.7572H2.39598C1.71296 20.7572 1.14313 20.5289 0.686471 20.0722C0.229812 19.6156 0.000988439 19.0452 0 18.3612V2.39598C0 1.71296 0.228824 1.14313 0.686471 0.68647C1.14412 0.229812 1.71346 0.000988439 2.39449 0H24.2934C24.9754 0 25.5447 0.228823 26.0014 0.68647C26.458 1.14412 26.6869 1.71395 26.6878 2.39598V9.69955L25.2052 11.1822V2.79481L13.3439 10.5506Z" fill="black" />
+                <path d="M13.2422 18.8473L18.5175 24.1226L28.0006 14.6381L26.9508 13.5898L18.5175 22.0232L14.2919 17.7976L13.2422 18.8473Z" fill="currentColor" />
+            </svg>
+            <p class="-mt-1 text-xs leading-tight">
+                <span x-text="$formData.hr_contact_email.value"></span> riceverà un invito ad iscriversi al network Bologna for talent, controlla lo spam.
+            </p>
+        </div>
+    </div>
+    <div class="arrow">
+    </div>
+</div>

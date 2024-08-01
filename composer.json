@@ -1,0 +1,19 @@
+{
+  "name": "localghost/wp-starter",
+  "description": "WordPress + Timber starter theme",
+  "type": "wordpress-theme",
+  "require": {
+    "timber/timber": "^2.2",
+    "upstatement/routes": "^0.9.1"
+  },
+  "require-dev": {
+    "php-stubs/acf-pro-stubs": "^6.2",
+    "php-stubs/woocommerce-stubs": "^9.1",
+    "php-stubs/wordpress-stubs": "^6.6"
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true
+    }
+  }
+}

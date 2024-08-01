@@ -1,0 +1,316 @@
+{% set title = post.title %}
+{% set description = "" %}
+{% set image_url = theme.link ~ "/assets/images/share-b4t.png" %}
+{% set favicon_url = theme.link ~ "/assets/images/favicon-b4t.svg" %}
+
+{% extends "layouts/base.twig" %}
+{% block content %}
+    <div class="alex-grid">
+        <div id="decorations"
+             class="absolute inset-0 hidden pointer-events-none -z-10 lg:block">
+            {% include "components/arrow-solid.twig" with {
+            container_classes: "absolute top-[var(--star-1)]",
+            star_classes: "col-span-2 w-full translate-x-[-68%] translate-y-[-100%]"}
+            %}
+            {% include "components/arrow-outline.twig" with {
+            container_classes: "absolute top-[var(--star-2)] translate-y-[-100%] !hidden xl:!grid",
+            star_classes: "col-span-1 w-full"}
+            %}
+            {% include "components/arrow-outline.twig" with {
+            container_classes: "absolute top-[var(--star-3)]",
+            star_classes: "col-span-1 w-full col-start-12 translate-x-[82%] translate-y-[-100%]"}
+            %}
+        </div>
+        <div class="alex-col">
+            {% include "components/form-hero.twig" with {logo: "components/logo-b4t.twig", classes: "component-accent-b4t"} %}
+            <form source="b4t"
+                  flow="create"
+                  x-data="formAdesione()"
+                  x-validate
+                  x-ref="form"
+                  @submit.prevent="submit($event)">
+                <h4 class="mt-16">
+                    Adesione a Bologna for Talent
+                </h4>
+                <p id="subtitle"
+                   class="mt-4 mb-8 text-body-medium">
+                    Per usufruire ai servizi di accompagnamento sul territorio e per la partecipazione ad azioni di retention e attrazione di competenze
+                </p>
+                <fieldset class="form-group"
+                          name="details">
+                    {% include "components/input.twig" with {name: "full_name", classes: "component-accent-b4t col-span-full md:col-span-4", label: "Il/La sottoscritto/a", placeholder: "Nome e cognome"} %}
+                    {% include "components/input.twig" with {name: "company_name", classes: "component-accent-b4t col-span-full md:col-span-4", label: "Come titolare e/o legale rappresentante di", placeholder: "Nome dell’azienda"} %}
+                    {% include "components/vat-input.twig" with {name: "tax_id_or_fiscal_code", classes: "component-accent-b4t col-span-full md:col-span-3", label: "Partita IVA / Codice fiscale", placeholder: "Numero di P.IVA o codice fiscale"} %}
+                    {% include "components/input.twig" with {name: "city", classes: "component-accent-b4t col-span-full md:col-span-3", label: "Con sede a", placeholder: "Città"} %}
+                    {% include "components/input.twig" with {name: "province", classes: "component-accent-b4t col-span-4 md:col-auto", label: "Provincia", placeholder: "-"} %}
+                    {% include "components/input.twig" with {name: "zip_code", classes: "component-accent-b4t col-span-4 md:col-auto", label: "CAP", placeholder: "40033", mask: "99999"} %}
+                    {% include "components/input.twig" with {name: "street_address", classes: "component-accent-b4t col-span-6 md:col-span-3", label: "In via", placeholder: "Via"} %}
+                    {% include "components/input.twig" with {name: "street_number", classes: "component-accent-b4t col-span-2 md:col-span-1", label: "Civico", placeholder: "N."} %}
+                    {% include "components/input.twig" with {name: "email", classes: "component-accent-b4t col-span-full md:col-span-4", type: "email", label: "Email", placeholder: "es. nome.cognome@email.com"} %}
+                    {% embed "components/checkbox.twig" with {classes: "component-accent-black col-span-full md:col-span-5 ml-[-12px]", name: "declare_bologna_location"} %}
+                        {% block slot_content %}
+                            <label class="mt-px cursor-pointer select-none"
+                                   for="{{ name }}">
+                                <div class="block font-sans text-sm font-normal leading-normal">
+                                    Dichiaro che almeno una sede si trova nell'<strong>area metropolitana di Bologna</strong> e precisamente nel comune di:
+                                </div>
+                            </label>
+                        {% endblock slot_content %}
+                    {% endembed %}
+                    {% include "components/select.twig" with {name: "bologna_municipality_selection", classes: "col-span-full mt-4 md:mt-0 md:col-span-3 component-accent-b4t", label: "Scegli un comune", options: comuni} %}
+                </fieldset>
+                {% embed "components/accordion.twig" with {background_color: "bg-b4t", text_color: "text-b4t", title: "Dichiara"} only %}
+                    {% block slot_content %}
+                        <p x-data="{message: 'Ad <strong>Invest in Bologna for Talent</strong> aderiscono le imprese e i centri di ricerca con sede legale e/o operativa nell’area della Città metropolitana di Bologna, come interlocutori e beneficiari del servizio.'}">
+                            <template x-ref="template">
+                                <p class="w-full"
+                                   x-html="message">
+                                </p>
+                            </template>
+                            di aderire al servizio
+                            <span class="underline cursor-pointer"
+                                  x-tooltip.interactive="{ content: () => $refs.template.innerHTML, allowHTML: true, appendTo: $root }">
+                                <strong>Bologna for Talent</strong>
+                            </span>
+                            della Città metropolitana e del Comune di Bologna dedicato a supportare imprese e centri di ricerca nell’attrazione e retention di talenti nazionali o internazionali a elevata specializzazione di conoscenze e competenze, in una logica di innovazione del sistema economico,
+                        </p>
+                        <p class="mt-4 mb-4">
+                            <strong>e pertanto</strong> può beneficiare dei seguenti servizi offerti:
+                        </p>
+                        <ul class="list-disc ms-[22px] mb-4 space-y-2">
+                            <li>
+                                <strong>accompagnamento</strong> one-to-one ai servizi del territorio per i talenti, così come definiti sopra, assunti o in via di assunzione;
+                            </li>
+                            <li>
+                                <strong>attrazione e retention</strong> dei talenti, così come definiti sopra, attraverso attività di promozione del territorio costruite anche tramite analisi dei fabbisogni dei profili di particolare interesse per l’azienda.
+                            </li>
+                        </ul>
+                        {% embed "components/checkbox.twig" with {classes: "mt-3 component-accent-black", name: "has_read_declarations"} %}
+                            {% block slot_content %}
+                                <label class="cursor-pointer select-none"
+                                       for="{{ name }}">
+                                    <div class="block mt-1 font-sans text-sm font-normal leading-normal">
+                                        Ho letto
+                                    </div>
+                                </label>
+                            {% endblock slot_content %}
+                        {% endembed %}
+                    {% endblock slot_content %}
+                {% endembed %}
+                {% embed "components/accordion.twig" with {background_color: "bg-b4t", text_color: "text-b4t", id: "dichiara_inoltre", title: "Dichiara inoltre"} only %}
+                    {% block slot_content %}
+                        <p class="mb-4">
+                            di voler beneficiare dei seguenti servizi offerti (opzionali):
+                        </p>
+                        {% embed "components/checkbox.twig" with {classes: "component-accent-black", optional: true, name: "website_link_inclusion"} %}
+                            {% block slot_content %}
+                                <label class="mt-px cursor-pointer select-none"
+                                       for="{{ name }}">
+                                    <div class="block font-sans text-sm font-normal leading-normal">
+                                        promozione delle opportunità lavorative dell’azienda nel sito Bologna for Talent, attraverso un collegamento con la pagina aziendale specifica;
+                                    </div>
+                                </label>
+                            {% endblock slot_content %}
+                        {% endembed %}
+                        {% embed "components/checkbox.twig" with {classes: "component-accent-black", optional: true, name: "event_participation_availability"} %}
+                            {% block slot_content %}
+                                <label class="mt-px cursor-pointer select-none"
+                                       for="{{ name }}">
+                                    <div class="block font-sans text-sm font-normal leading-normal">
+                                        disponibilità a informare ed eventualmente coinvolgere Bologna for Talent a eventi (es. open day) orientati all’attrazione o retention, organizzati dall’azienda stessa o alla quale partecipa.
+                                    </div>
+                                </label>
+                            {% endblock slot_content %}
+                        {% endembed %}
+                    {% endblock slot_content %}
+                {% endembed %}
+                <fieldset class="py-16 my-20 border-t border-b border-bis form-group"
+                          name="bis_registration_status_container">
+                    <div class="lg:-translate-x-[calc(100%/8-1rem)] form-group col-span-full">
+                        {% include "components/star.twig" with {
+                        container_classes: "col-span-2 w-full !hidden lg:!block",
+                        star_classes: "col-span-full"}
+                        %}
+                        <div x-data="{open: false}"
+                             class="col-span-full lg:col-span-6">
+                            <h5 class="mb-6 text-bis">
+                                Adesione al Network
+                                <br>
+                                <strong>Bologna Innovation Square</strong>
+                            </h5>
+                            <p class="text-body-medium">
+                                Per l’inoltro della richiesta di adesione a Bologna for Talent è necessario essere già parte del network di <strong>Bologna Innovation Square</strong>, la piattaforma dell’innovazione del territorio metropolitano che vuole posizionare Bologna come uno dei principali contesti di respiro internazionale in cui sviluppare innovazione, e rimanere aggiornata/o sulle iniziative della piattaforma.
+                                <span class="underline cursor-pointer"
+                                      @click="open = true">
+                                    Approfondisci
+                                </span>
+                            </p>
+                            {% set options = [
+                                {
+                                    "label": "SÍ — Faccio già parte del network di BIS",
+                                    "value": "yes"
+                                },
+                                {
+                                    "label": "NO — non sono iscritto al network di BIS",
+                                    "value": "no",
+                                    "checked": true
+                                }
+                            ] %}
+                            {% include "components/radio.twig" with {options: options, name: "bis_registration_status", classes: "my-8"} %}
+                            <p class="text-body-small">
+                                <strong>Non sei iscritto a BIS? Non ti preoccupare</strong>
+                                <br>
+                                I tuoi dati verranno usati per l’adesione al network di Bologna for Talent e per iscrizione automatica
+                                senza ulteriori passaggi. Riceverai una mail di conferma al termine di questa procedura.
+                            </p>
+                            {% embed "components/modal.twig" with {name: "learn_more_modal", border_color: "border-bis", teleport: true} %}
+                                {% block slot_content %}
+                                    <div class="form-group">
+                                        {% include "components/logo-bis.twig" with {classes: "col-span-full lg:col-span-3 w-full lg:pr-5"} %}
+                                    </div>
+                                    <div class="space-y-8 form-group mt-7 lg:space-y-0">
+                                        <div class="flex flex-col justify-between col-span-full lg:col-span-4">
+                                            <div>
+                                                <h5>
+                                                    Un’alleanza territoriale per l’innovazione
+                                                </h5>
+                                                <p class="mt-4 text-body-small">
+                                                    <strong>Bologna Innovation Square</strong> ha l’obiettivo di sviluppare sinergie e progettualità condivise in grado di consolidare l’innovazione del sistema economico metropolitano, agevolando e promuovendo la collaborazione tra gli attori del sistema territoriale.
+                                                    <br>
+                                                    L’azione della piattaforma è indirizzata dall’Advisory Board, coordinato da <strong>Città metropolitana e Comune di Bologna</strong> e composto da sei partner strategici del territorio e da alcune personalità di rilievo nazionale nel campo dell’innovazione.
+                                                </p>
+                                            </div>
+                                            <a href="{{ post.bis_brochure_url }}"
+                                               target="_blank"
+                                               class="text-black border border-black hover:text-white mt-8 bg-transparent hover:bg-bis hover:border-transparent focus:ring-bis font-medium px-5 py-2.5 text-center inline-flex items-center me-2 w-full lg:w-fit">
+                                                <svg class="size-5 me-2"
+                                                     xmlns="http://www.w3.org/2000/svg"
+                                                     fill="none"
+                                                     viewBox="0 0 19 18">
+                                                    <g fill="currentColor" clip-path="url(#a)">
+                                                    <path d="M17.37 12.38a.65.65 0 0 0-.64.64v2.5c0 .26-.2.46-.45.46H2.72a.44.44 0 0 1-.45-.46v-2.5c0-.36-.3-.64-.65-.64a.65.65 0 0 0-.64.64v2.5c0 .96.76 1.72 1.71 1.72h13.59a1.7 1.7 0 0 0 1.71-1.71v-2.5a.61.61 0 0 0-.62-.65Z" />
+                                                    <path d="M9.05 13.08c.11.11.28.17.45.17.17 0 .3-.06.45-.17l4.08-3.97a.63.63 0 0 0 0-.9.63.63 0 0 0-.9 0l-2.98 2.93V1.4A.65.65 0 0 0 9.5.76a.65.65 0 0 0-.65.65v9.73L5.87 8.2c-.25-.25-.65-.22-.9 0a.66.66 0 0 0 0 .9l4.08 3.97Z" />
+                                                    </g>
+                                                    <defs>
+                                                    <clipPath id="a">
+                                                    <path fill="#fff" d="M.5 0h18v18H.5z" />
+                                                    </clipPath>
+                                                    </defs>
+                                                </svg>
+                                                Scarica ora la brochure
+                                            </a>
+                                        </div>
+                                        <div class="grid grid-cols-4 gap-4 text-sm font-bold text-center text-white uppercase xl:gap-8 col-span-full lg:col-span-4">
+                                            <div class="flex flex-row items-center justify-between p-5 space-x-2 lg:space-x-0 col-span-full lg:col-span-2 lg:flex-col lg:space-y-5 bg-cerulean-blue">
+                                                <p class="text-xs text-left lg:text-sm text-pretty lg:text-center">
+                                                    Impatto del tecnopolo e digitalizzazione
+                                                </p>
+                                                <img src="{{ theme.link }}/assets/images/blu.svg"
+                                                     class="size-[58px] mx-auto">
+                                            </div>
+                                            <div class="flex flex-row items-center justify-between p-5 space-x-2 lg:space-x-0 col-span-full lg:col-span-2 lg:flex-col lg:space-y-5 bg-jade-green">
+                                                <p class="text-xs text-left lg:text-sm text-pretty lg:text-center">
+                                                    Innovazione per la transizione ecologica
+                                                </p>
+                                                <img src="{{ theme.link }}/assets/images/verde.svg"
+                                                     class="size-[58px] mx-auto">
+                                            </div>
+                                            <div class="flex flex-row items-center justify-between p-5 space-x-2 lg:space-x-0 col-span-full lg:col-span-2 lg:flex-col lg:space-y-5 bg-torch-red">
+                                                <p class="text-xs text-left lg:text-sm text-pretty lg:text-center">
+                                                    Attrazione e retention di talenti
+                                                </p>
+                                                <img src="{{ theme.link }}/assets/images/rosso.svg"
+                                                     class="size-[58px] mx-auto">
+                                            </div>
+                                            <div class="flex flex-row items-center justify-between p-5 space-x-2 lg:space-x-0 col-span-full lg:col-span-2 lg:flex-col lg:space-y-5 bg-sin-yellow">
+                                                <p class="text-xs text-left lg:text-sm text-pretty lg:text-center">
+                                                    Nuova imprenditoria
+                                                </p>
+                                                <img src="{{ theme.link }}/assets/images/giallo.svg"
+                                                     class="size-[58px] mx-auto">
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endblock slot_content %}
+                            {% endembed %}
+                        </div>
+                    </div>
+                </fieldset>
+                {% embed "components/accordion.twig" with {background_color: "bg-b4t", text_color: "text-b4t", title: "Autorizza"} only %}
+                    {% block slot_content %}
+                        <p>
+                            il servizio Bologna for Talent ad inserire l’azienda in un indirizzario utile per la promozione di eventi e informazioni sullo stesso.
+                            A tal fine designa come referente operativo e di contatto con il servizio Bologna for Talent:
+                        </p>
+                        <fieldset class="mt-4 form-group"
+                                  name="operational_contact_details">
+                            {% include "components/input.twig" with {name: "operational_contact_name", classes: "col-span-full md:col-span-4", label: "Referente operativo", placeholder: "Nome e cognome"} %}
+                            {% include "components/input.twig" with {name: "operational_contact_role", classes: "col-span-full md:col-span-4", label: "Ruolo in azienda", placeholder: "es. Manager"} %}
+                            {% include "components/input.twig" with {name: "operational_contact_email", type: "email", classes: "col-span-full md:col-span-4", label: "Email", placeholder: "es. nome.cognome@email.com"} %}
+                            {% include "components/input.twig" with {name: "operational_contact_phone", classes: "col-span-full md:col-span-4", label: "Telefono", placeholder: "es. +39 000 00 00 000"} %}
+                        </fieldset>
+                    {% endblock slot_content %}
+                {% endembed %}
+                {% embed "components/accordion.twig" with {background_color: "bg-b4t", text_color: "text-b4t", title: "e acconsente"} %}
+                    {% block slot_content %}
+                        <div class="flex flex-col space-y-3">
+                            {% embed "components/checkbox.twig" with {classes: "component-accent-black", name: "data_processing_consent"} %}
+                                {% block slot_content %}
+                                    <label class="mt-px cursor-pointer select-none"
+                                           for="{{ name }}">
+                                        <div class="block font-sans text-sm font-normal leading-normal">
+                                            {{ post.consents.privacy_consent_1_text }}
+                                        </div>
+                                    </label>
+                                {% endblock slot_content %}
+                            {% endembed %}
+                            {% embed "components/checkbox.twig" with {classes: "component-accent-black", name: "company_logo_usage_consent"} %}
+                                {% block slot_content %}
+                                    <label class="mt-px cursor-pointer select-none"
+                                           for="{{ name }}">
+                                        <div class="block font-sans text-sm font-normal leading-normal">
+                                            {{ post.consents.company_logo_usage_consent_text }}
+                                        </div>
+                                    </label>
+                                {% endblock slot_content %}
+                            {% endembed %}
+                            {% embed "components/checkbox.twig" with {classes: "component-accent-black", optional: true, name: "newsletter_consent"} %}
+                                {% block slot_content %}
+                                    <label class="mt-px cursor-pointer select-none"
+                                           for="{{ name }}">
+                                        <div class="block font-sans text-sm font-normal leading-normal">
+                                            {{ post.consents.newsletter_consent_text }}
+                                        </div>
+                                    </label>
+                                {% endblock slot_content %}
+                            {% endembed %}
+                        </div>
+                    {% endblock slot_content %}
+                {% endembed %}
+                <div class="flex justify-center mt-20">
+                    <button type="submit"
+                            :disabled="!$validate.isComplete($refs.form) || disableSubmit"
+                            class="submit-button bg-b4t hover:bg-b4t-600 focus:ring-b4t-600">
+                        Invia richiesta
+                    </button>
+                </div>
+                <div id="form-result"
+                     class="max-w-md px-4 mx-auto mt-4 text-center"
+                     x-show="state == 'success' || state == 'error'"
+                     x-transition>
+                    <p class=""
+                       x-show="state == 'success'">
+                        Grazie per aver compilato il form. Abbiamo ricevuto la tua richiesta di adesione!
+                    </p>
+                    <p class=""
+                       x-show="state == 'error'">
+                        Purtroppo qualcosa è andato storto durante l'invio del form <span x-text="`(${message})`"></span>. Riprova!
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
+{% block footer %}
+    {% include "components/footer.twig" %}
+{% endblock footer %}

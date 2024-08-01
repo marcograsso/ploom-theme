@@ -1,0 +1,21 @@
+<section id="hero"
+         class="{{ classes }}">
+    {% include logo with {classes: "mx-auto col-span-4 mb-16 max-h-[162px] max-w-full"} %}
+    <h1 class="h3 lg:h1">
+        {{ post.hero.title }}
+    </h1>
+    <div class="mt-8 text-body-medium [&_p]:mb-3 [&_ul]:list-disc [&_ul]:list-inside [&_ul]:mb-3">
+        {{ post.hero.description|wpautop }}
+    </div>
+    <div x-data
+         @click="document.querySelector('form').scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' })"
+         class="flex flex-col justify-center mx-auto mt-6 cursor-pointer w-fit text-accent lg:mx-0">
+        <span class="uppercase text-[10px]/[24px] mb-2 font-bold">Compila il form</span>
+        <svg class="w-8 h-auto mx-auto animate-jump"
+             xmlns="http://www.w3.org/2000/svg"
+             fill="none"
+             viewBox="0 0 33 72">
+            <path fill="currentColor" d="M16.97 0c.7 0 1.25.56 1.25 1.25V67.7l12.61-12.83a1.25 1.25 0 1 1 1.79 1.76L17.88 71.6l-.03.03a1.25 1.25 0 0 1-1.8-.04L1.34 56.63a1.25 1.25 0 1 1 1.79-1.76l12.6 12.83V1.25c0-.69.56-1.25 1.25-1.25Z" />
+        </svg>
+    </div>
+</section>

@@ -1,0 +1,30 @@
+<div {{ id ? 'id=' ~ id : '' }} class="mt-20" x-data="{open: true}">
+    <div class="flex flex-row items-center justify-between pb-6 cursor-pointer"
+         @click.prevent="open = !open">
+        <span class="h5 {{ text_color }} mr-[10px]">✦</span>
+        <h5 class="mr-6 uppercase transition-colors ease-in-out whitespace-nowrap"
+            :class="open ? '{{ text_color }}' : 'text-black'">
+            {{ title }}
+        </h5>
+        <div class="w-full h-px transition-colors ease-in-out bg-black"
+             :class="open ? '{{ background_color }}' : 'bg-black'">
+        </div>
+        <button @click.prevent
+                class="flex items-center justify-center w-6 h-6 text-white transition-colors ease-in-out rounded-full shrink-0"
+                :class="open ? '{{ background_color }}' : 'bg-black'">
+            <svg class="transition-transform ease-in-out"
+                 :class="open ? 'transform -scale-100 mb-[2px]' : 'mt-[2px]'"
+                 width="12"
+                 height="7"
+                 viewBox="0 0 12 7"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M6.37383 6.83468L11.8574 0.89447C11.9489 0.795355 12 0.663673 12 0.526737C12 0.389802 11.9489 0.258121 11.8574 0.159006L11.8512 0.15261C11.8068 0.104394 11.7534 0.0660014 11.6942 0.0397658C11.635 0.0135302 11.5712 9.1619e-07 11.5068 9.10557e-07C11.4424 9.04924e-07 11.3786 0.0135302 11.3194 0.0397658C11.2602 0.0660014 11.2068 0.104394 11.1624 0.15261L5.99897 5.7464L0.837607 0.152609C0.793229 0.104393 0.739812 0.0660004 0.680605 0.0397648C0.621398 0.0135293 0.557639 -4.66487e-08 0.493207 -5.22816e-08C0.428774 -5.79145e-08 0.365015 0.0135292 0.305808 0.0397648C0.246601 0.0660004 0.193184 0.104393 0.148806 0.152609L0.142609 0.159005C0.051067 0.25812 -3.75792e-07 0.3898 -3.87764e-07 0.526736C-3.99735e-07 0.663672 0.0510669 0.795354 0.142609 0.894469L5.62617 6.83468C5.67439 6.88692 5.73239 6.92851 5.79665 6.95693C5.86091 6.98535 5.93009 7 6 7C6.06991 7 6.13909 6.98535 6.20335 6.95693C6.26761 6.92851 6.32561 6.88692 6.37383 6.83468Z" fill="currentColor" />
+            </svg>
+        </button>
+    </div>
+    <div x-show="open"
+         x-collapse>
+        {% block slot_content %}
+        {% endblock slot_content %}
+    </div>
+</div>

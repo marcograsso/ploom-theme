@@ -1,0 +1,19 @@
+<div class="flex justify-center mt-20"
+     x-data="{ message: 'Mancano da compilare i campi:', init() { setInterval(() => { if (!$validate.isComplete($refs.form) || disableSubmit) { this.$el.__x_tippy.enable(); } else { this.$el.__x_tippy.disable(); } }, 500)} }"
+     x-tooltip.interactive="{ content: () => $refs.submitTooltipTemplate.innerHTML, allowHTML: true, appendTo: $root }">
+    <template x-ref="submitTooltipTemplate">
+        <p x-text="message">
+        </p>
+        <ul class="list-disc ms-4">
+            <template x-for="field in getInvalidFieldsLabels($formData)">
+                <li x-text="field">
+                </li>
+            </template>
+        </ul>
+    </template>
+    <button type="submit"
+            :disabled="!$validate.isComplete($refs.form) || disableSubmit"
+            class="submit-button bg-b4t hover:bg-b4t-600 focus:ring-b4t-600">
+        Invia richiesta
+    </button>
+</div>

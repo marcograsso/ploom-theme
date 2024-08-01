@@ -1,0 +1,20 @@
+{# Mail di ringraziamento che riceve l'utente dopo aver compilato il form di B4T #}
+
+{% extends "emails/base.mjml.twig" %}
+{% block content %}
+    {% if user.form == "Bologna for Talent" %}
+        {% set color = "#e52321" %}
+        <mj-image src="{{ theme.link }}/assets/images/logo-b4t.png" alt="B4T - Bologna for Talent" width="128px" align="left" />
+    {% else %}
+        {% set color = "#C800DC" %}
+        <mj-image src="{{ theme.link }}/assets/images/logo-bis.png" alt="BIS - Bologna Innovation Square" width="256px" align="left" />
+    {% endif %}
+    <mj-text>
+    <p>
+        Abbiamo ricevuto una nuova adesione a {{ user.form }} per {{ user.company_name }}.
+    </p>
+    </mj-text>
+    <mj-button href="{{ site.link }}/wp-admin/post.php?post={{ user.id }}&action=edit" background-color="{{ color }}" color="white" align="left" font-weight="700" border-radius="24px">
+    Apri l'adesione sul gestionale
+    </mj-button>
+{% endblock %}

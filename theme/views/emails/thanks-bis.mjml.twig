@@ -1,0 +1,17 @@
+{# Mail di ringraziamento che riceve l'utente dopo aver compilato il form di BIS #}
+
+{% extends "emails/base.mjml.twig" %}
+{% block content %}
+  <mj-image src="{{ theme.link }}/assets/images/logo-bis.png" alt="BIS - Bologna Innovation Square" width="256px" align="left" />
+  <mj-text>
+  <p>
+    <strong>Salve {{ user.full_name }}</strong>,
+  </p>
+  <p>
+    abbiamo ricevuto la sua richiesta di adesione a Bologna Innovation Square.
+  </p>
+  <p>
+    Grazie per il suo interesse.
+  </p>
+  </mj-text>
+{% endblock content %}

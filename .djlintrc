@@ -1,0 +1,7 @@
+{
+  "profile": "nunjucks",
+  "custom_blocks": "embed",
+  "blank_line_before_tag": "embed,extends",
+  "format_attribute_template_tags": true,
+  "line_break_after_multiline_tag": "true"
+}

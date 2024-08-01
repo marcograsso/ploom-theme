@@ -1,0 +1,50 @@
+<div x-data="{showModal: false, enabled: true, init() {this.$watch('searchResults', value => {if (value && this.enabled) {this.showModal = true; this.enabled = false;}})} }"
+     class="mb-6 {{ classes }}">
+    <label for="{{ name }}"
+           class="block mb-2 font-medium">
+        {{ label }}
+    </label>
+    <input type="{{ type|default("text") }}" id="{{ name }}" name="{{ name }}" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-accent focus:border-accent block w-full p-2.5" placeholder="{{ placeholder }}" autocomplete="off" data-1p-ignore x-model="id" @input.debounce.300ms="if (enabled) searchResults = await getAdesioneById(id)" {{ mask ? 'x-mask="' ~ mask ~ '"' : "" }} {{ mask_dynamic ? 'x-mask:dynamic="' ~ mask ~ '"' : "" }} {{ validate ? 'x-validate="' ~ validate ~ '"' : "" }} {{ optional ? "" : "required" }} {{ dynamic_disabled ? ':disabled="' ~ dynamic_disabled ~ '"' : "" }} {{ dynamic_classes ? ':class="' ~ dynamic_classes ~ '"' : "" }} />
+    <div class="error-msg">
+        {{ error_message ? error_message : "Campo obbligatorio" }}
+    </div>
+    <div x-show="showModal"
+         style="display: none"
+         class="fixed inset-0 z-10 overflow-y-auto">
+        <div x-show="showModal"
+             x-transition.opacity
+             class="fixed inset-0 bg-white bg-opacity-10 backdrop-blur-xl">
+        </div>
+        <div x-show="showModal"
+             x-transition
+             class="relative flex items-center justify-center min-h-screen p-4">
+            <div x-on:click.stop
+                 x-trap.noscroll.inert="showModal"
+                 class="relative w-full overflow-y-auto">
+                <div class="container grid grid-cols-12 py-12 mx-auto">
+                    <div class="relative col-span-8 col-start-3 bg-white border shadow-lg border-bis rounded-xl">
+                        <div @click="showModal = false;"
+                             class="absolute flex items-center justify-end cursor-pointer top-5 right-7">
+                            <span class="mr-3 text-xs font-bold">Chiudi</span>
+                            <svg width="28"
+                                 height="28"
+                                 viewBox="0 0 28 28"
+                                 fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14 0C6.2 0 0 6.2 0 14C0 21.8 6.2 28 14 28C21.8 28 28 21.8 28 14C28 6.2 21.8 0 14 0ZM19.4 21L14 15.6L8.6 21L7 19.4L12.4 14L7 8.6L8.6 7L14 12.4L19.4 7L21 8.6L15.6 14L21 19.4L19.4 21Z" fill="black" />
+                            </svg>
+                        </div>
+                        <div class="p-8">
+                            <h6>
+                                I dati anagrafici verranno precompilati
+                            </h6>
+                            <div class="mt-4">
+                                Abbiamo trovato un adesione a BIS per <span x-text="id"></span> (<span x-text="company_name"></span>). Precompileremo i dati anagrafici per te.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
