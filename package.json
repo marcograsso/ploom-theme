@@ -12,18 +12,20 @@
     "zip": "python build-theme.py"
   },
   "dependencies": {
-    "@prettier/plugin-php": "^0.22.4",
-    "@tailwindcss/forms": "^0.5.9",
-    "@zackad/prettier-plugin-twig": "^0.16.0",
     "alpinejs": "^3.14.1",
     "autoprefixer": "^10.4.20",
     "cross-env": "^7.0.3",
     "gsap": "^3.12.5",
     "postcss": "^8.4.47",
     "postcss-import": "^16.1.0",
-    "prettier": "^3.5.3",
-    "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwindcss": "^3.4.13",
-    "vite": "^5.4.9"
+    "@tailwindcss/forms": "^0.5.9"
+  },
+  "devDependencies": {
+    "@prettier/plugin-php": "^0.22.4",
+    "@zackad/prettier-plugin-twig": "^0.16.0",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "prettier": "^3.5.3",
+    "vite": "^6.2.2"
   }
 }
