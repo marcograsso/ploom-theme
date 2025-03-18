@@ -124,7 +124,10 @@ class Attachment extends Post
      */
     public function path(): string
     {
-        return URLHelper::get_rel_path($this->src());
+        $src = $this->src();
+        $src = URLHelper::url_to_file_system($src);
+
+        return URLHelper::get_rel_path($src);
     }
 
     /**
@@ -286,7 +289,7 @@ class Attachment extends Post
      * This image is assigned to {{ image.parent.title }}
      * ```
      *
-     * @return null|\Timber\Post Parent object as a `Timber\Post`. Returns `false` if no parent
+     * @return null|Post Parent object as a `Timber\Post`. Returns `false` if no parent
      *                            object is defined.
      */
     public function parent(): ?Post

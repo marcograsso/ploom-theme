@@ -2,10 +2,10 @@
 
 use Timber\Site;
 use Timber\Timber;
+use Timber\URLHelper;
 
-/**
- * Class StarterSite
- */
+require_once "vite.php";
+
 class StarterSite extends Site
 {
     public function __construct()
@@ -20,11 +20,15 @@ class StarterSite extends Site
             "update_twig_environment_options",
         ]);
 
+        add_action("admin_enqueue_scripts", [$this, "admin_enqueue_scripts"]);
+        $this->vite = new Vite();
+
         parent::__construct();
     }
 
     public function enqueue_assets()
     {
+        // Remove default styles
         global $wp_styles;
         foreach ($wp_styles->queue as $key => $handle) {
             if (strpos($handle, "wp-block-") === 0) {
@@ -34,37 +38,20 @@ class StarterSite extends Site
         wp_dequeue_style("global-styles");
         wp_dequeue_script("jquery");
 
-        $vite_env = "production";
-
-        if (file_exists(get_template_directory() . "/config.json")) {
-            $config = json_decode(
-                file_get_contents(get_template_directory() . "/config.json"),
-                true
-            );
-            $vite_env = $config["vite"]["environment"] ?? "production";
-        }
-
-        $dist_uri = get_template_directory_uri() . "/assets/dist";
-        $dist_path = get_template_directory() . "/assets/dist";
-        $manifest = null;
-
-        if (file_exists($dist_path . "/.vite/manifest.json")) {
-            $manifest = json_decode(
-                file_get_contents($dist_path . "/.vite/manifest.json"),
-                true
-            );
-        }
-
-        if (is_array($manifest)) {
-            if ($vite_env === "production" || is_admin()) {
+        if (is_array($this->vite->manifest)) {
+            if ($this->vite->environment === "production" || is_admin()) {
                 $js_file = "assets/main.js";
                 wp_enqueue_style(
                     "main",
-                    $dist_uri . "/" . $manifest[$js_file]["css"][0]
+                    $this->vite->dist_uri .
+                        "/" .
+                        $this->vite->manifest[$js_file]["css"][0]
                 );
                 wp_enqueue_script(
                     "main",
-                    $dist_uri . "/" . $manifest[$js_file]["file"],
+                    $this->vite->dist_uri .
+                        "/" .
+                        $this->vite->manifest[$js_file]["file"],
                     [],
                     "",
                     [
@@ -75,12 +62,35 @@ class StarterSite extends Site
             }
         }
 
-        if ($vite_env === "development") {
+        if ($this->vite->environment === "development") {
             add_action("wp_head", function () {
-                echo '<script type="module" crossorigin src="http://localhost:3000/@vite/client"></script>';
-                echo '<script type="module" crossorigin src="http://localhost:3000/assets/main.js"></script>';
+                echo '<script type="module" crossorigin src="' .
+                    $this->vite->dev_manifest["url"] .
+                    '@vite/client"></script>';
+                echo '<script type="module" crossorigin src="' .
+                    $this->vite->dev_manifest["url"] .
+                    'assets/main.js"></script>';
             });
         }
+    }
+
+    public function admin_enqueue_scripts()
+    {
+        // if (is_array($this->vite->manifest)) {
+        //     wp_enqueue_style(
+        //         "admin-styles",
+        //         $this->vite->dist_uri .
+        //             "/" .
+        //             $this->vite->manifest["assets/styles/admin.css"]["file"]
+        //     );
+        // }
+
+        // if ($this->vite->environment === "development") {
+        //     add_action("admin_head", function () {
+        //         echo '<script type="module" crossorigin src="http://localhost:3000/@vite/client"></script>';
+        //         echo '<script type="module" crossorigin src="http://localhost:3000/assets/styles/admin.css"></script>';
+        //     });
+        // }
     }
 
     /**
@@ -91,8 +101,20 @@ class StarterSite extends Site
     public function add_to_context($context)
     {
         $context["menu"] = Timber::get_menu();
+
+        // Set all nav menus in context.
+        foreach (array_keys(get_registered_nav_menus()) as $location) {
+            // Bail out if menu has no location.
+            if (!has_nav_menu($location)) {
+                continue;
+            }
+
+            $menu = Timber::get_menu($location);
+            $context["menus"][$location] = $menu;
+        }
         $context["options"] = get_fields("options"); // ACF options
         $context["site"] = $this;
+        $context["current_url"] = URLHelper::get_current_url();
 
         return $context;
     }

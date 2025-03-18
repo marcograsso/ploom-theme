@@ -1,3 +1,4 @@
+{# prettier-ignore #}
 <script>
     document.addEventListener('alpine:init', () => {
         Alpine.data('tailwindDebugger', () => ({
@@ -17,34 +18,37 @@
         }))
     })
 </script>
-<div x-data="tailwindDebugger()"
-     @resize.window="width = window.innerWidth; height = window.innerHeight"
-     x-bind="trigger"
-     class="fixed bottom-5 left-5 z-50 flex items-center space-x-2 rounded-full bg-black px-2.5 py-1 font-mono text-xs font-medium text-white uppercase border border-white/10 cursor-pointer overflow-hidden">
-    <div id="notification"
-         x-show="showNotification"
-         x-transition
-         class="absolute inset-0 flex items-center justify-center text-black bg-white">
-        Copied!
+
+<div
+  x-data="tailwindDebugger()"
+  @resize.window="width = window.innerWidth; height = window.innerHeight"
+  x-bind="trigger"
+  class="fixed bottom-5 left-5 z-50 flex cursor-pointer items-center space-x-2 overflow-hidden rounded-full border border-white/10 bg-black px-2.5 py-1 font-mono text-xs font-medium text-white uppercase"
+>
+  <div
+    id="notification"
+    x-show="showNotification"
+    x-transition
+    class="absolute inset-0 m-0 flex items-center justify-center bg-white text-black"
+  >
+    Copied!
+  </div>
+  <div id="breakpoint" class="w-[3ch] text-right">
+    <span class="sm:hidden">--</span>
+    <span class="hidden sm:inline md:hidden">sm</span>
+    <span class="hidden md:inline lg:hidden">md</span>
+    <span class="hidden lg:inline xl:hidden">lg</span>
+    <span class="hidden xl:inline 2xl:hidden">xl</span>
+    <span class="hidden 2xl:inline">2xl</span>
+  </div>
+  <div class="h-4 w-px bg-gray-800"></div>
+  <div class="flex">
+    <div class="w-[4ch] text-right">
+      <span x-text="width">0</span>
     </div>
-    <div id="breakpoint"
-         class="w-[3ch] text-right">
-        <span class="sm:hidden">--</span>
-        <span class="hidden sm:inline md:hidden">sm</span>
-        <span class="hidden md:inline lg:hidden">md</span>
-        <span class="hidden lg:inline xl:hidden">lg</span>
-        <span class="hidden xl:inline 2xl:hidden">xl</span>
-        <span class="hidden 2xl:inline">2xl</span>
+    <span class="mx-[1ch]">×</span>
+    <div class="w-[4ch] text-left">
+      <span x-text="height">0</span>
     </div>
-    <div class="w-px h-4 bg-gray-800">
-    </div>
-    <div class="flex">
-        <div class="w-[4ch] text-right">
-            <span x-text="width">0</span>
-        </div>
-        <span class="mx-[1ch]">×</span>
-        <div class="w-[4ch] text-left">
-            <span x-text="height">0</span>
-        </div>
-    </div>
+  </div>
 </div>

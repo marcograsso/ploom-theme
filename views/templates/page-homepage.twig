@@ -1,4 +1,9 @@
 {% extends "layouts/base.twig" %}
 {% block content %}
-  Ciao!
+  <section class="flex h-svh w-full">
+    {{ include("components/hero-carousel.twig") }}
+  </section>
+  <section class="flex h-svh w-full flex-col items-center justify-center">
+    <h2 class="text-4xl xl:text-9xl">Sezione</h2>
+  </section>
 {% endblock content %}

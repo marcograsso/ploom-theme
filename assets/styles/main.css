@@ -1,3 +1,17 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "sans-serif";
+}
+
+@supports (font-variation-settings: normal) {
+  @theme {
+    --font-sans: "InterVariable", sans-serif;
+  }
+  :root {
+    font-optical-sizing: auto;
+  }
+}
+
+@plugin "@tailwindcss/forms";
+@import "./base.css";

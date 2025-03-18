@@ -1,30 +1,40 @@
-import { defineConfig, loadEnv } from "vite";
+import { defineConfig } from "vite";
+import path from "path";
+import mkcert from "vite-plugin-mkcert";
+import devManifest from "vite-plugin-dev-manifest";
+import tailwindcss from "@tailwindcss/vite";
 
-const destination = "./assets/dist";
+const ROOT = path.resolve("../../../");
+const BASE = __dirname.replace(ROOT, "");
+const destination = "./dist";
 const entries = ["./assets/main.js"];
 
 export default defineConfig(({ mode }) => {
   return {
-    base: "./",
+    base: process.env.NODE_ENV === "production" ? `${BASE}/dist/` : BASE,
+    plugins: [mkcert(), devManifest(), tailwindcss()],
     resolve: {
       alias: {
-        "@": __dirname,
+        "@": BASE,
       },
     },
     server: {
-      cors: true,
-      strictPort: true,
       port: 3000,
-      https: false,
+      cors: true,
+      https: true,
       hmr: {
         host: "localhost",
       },
     },
+    esbuild: {
+      // Remove console logs from production builds
+      drop: ["console", "debugger"],
+    },
     build: {
+      assetsDir: "./assets",
       outDir: destination,
       emptyOutDir: true,
       manifest: true,
-      target: "es2018",
       rollupOptions: {
         input: entries,
       },
