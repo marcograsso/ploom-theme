@@ -11,12 +11,12 @@
     "zip": "python build-theme.py"
   },
   "dependencies": {
-    "@gsap/shockingly": "^3.12.7",
-    "@tailwindcss/forms": "^0.5.9",
-    "@tailwindcss/vite": "^4.0.14",
-    "alpinejs": "^3.14.1",
-    "swiper": "^11.2.5",
-    "tailwindcss": "^4.0.14"
+    "gsap": "^3.13.0",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/vite": "^4.1.7",
+    "alpinejs": "^3.14.9",
+    "swiper": "^11.2.7",
+    "tailwindcss": "^4.1.7"
   },
   "devDependencies": {
     "@prettier/plugin-php": "^0.22.4",
@@ -24,7 +24,7 @@
     "cross-env": "^7.0.3",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
-    "vite": "^6.2.2",
+    "vite": "^6.3.5",
     "vite-plugin-dev-manifest": "^1.4.0",
     "vite-plugin-mkcert": "^1.17.8"
   }
