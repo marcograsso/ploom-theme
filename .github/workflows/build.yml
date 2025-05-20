@@ -33,5 +33,12 @@ jobs:
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          path: .
+          name: ${{ github.event.repository.name }}
+          include-hidden-files: true
+          path: |
+            .
+            !node_modules
+            !.npmrc
+            !.gitignore
           retention-days: 1
+          overwrite: true
