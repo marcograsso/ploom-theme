@@ -38,7 +38,13 @@ jobs:
           path: |
             .
             !node_modules
-            !.npmrc
+            !.git
             !.gitignore
+            !.github
+            !.vscode
+            !.npmrc
+            !prettier.config.cjs
+            !vite.config.js
+
           retention-days: 1
           overwrite: true

@@ -4,7 +4,6 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "preinstall": "git config core.hooksPath scripts",
     "dev": "jaq -i '.vite.environment = \"development\"' config.json && cross-env NODE_ENV=development vite",
     "watch": "npm run dev",
     "build": "vite build && jaq -i '.vite.environment = \"production\"' config.json",
