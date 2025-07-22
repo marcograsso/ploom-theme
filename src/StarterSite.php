@@ -3,6 +3,7 @@
 use Timber\Site;
 use Timber\Timber;
 use Timber\URLHelper;
+use localghost\Twig\Extra\Hateml\HatemlExtension;
 
 require_once "vite.php";
 
@@ -45,7 +46,7 @@ class StarterSite extends Site
                     "main",
                     $this->vite->dist_uri .
                         "/" .
-                        $this->vite->manifest[$js_file]["css"][0]
+                        $this->vite->manifest[$js_file]["css"][0],
                 );
                 wp_enqueue_script(
                     "main",
@@ -57,7 +58,7 @@ class StarterSite extends Site
                     [
                         "strategy" => "defer",
                         "in_footer" => true,
-                    ]
+                    ],
                 );
             }
         }
@@ -175,6 +176,18 @@ class StarterSite extends Site
      */
     public function add_to_twig($twig)
     {
+        $twig->addExtension(new HatemlExtension());
+
+        $twig->addFilter(
+            new \Twig\TwigFilter("ray", function (...$params) {
+                ray(...$params);
+            }),
+        );
+        $twig->addFunction(
+            new \Twig\TwigFunction("ray", function (...$params) {
+                ray(...$params);
+            }),
+        );
         return $twig;
     }
 

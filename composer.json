@@ -2,9 +2,17 @@
   "name": "localghost/wp-starter",
   "description": "WordPress + Timber starter theme",
   "type": "wordpress-theme",
+  "repositories": [
+    {
+      "type": "path",
+      "url": "/Users/y/projects/twig-hateml/"
+    }
+  ],
   "require": {
     "timber/timber": "^2.2",
-    "upstatement/routes": "^0.9.1"
+    "upstatement/routes": "^0.9.1",
+    "localghost/twig-hateml": "@dev",
+    "spatie/ray": "^1.42"
   },
   "require-dev": {
     "php-stubs/acf-pro-stubs": "^6.2",
@@ -13,7 +21,8 @@
   },
   "config": {
     "allow-plugins": {
-      "composer/installers": true
+      "composer/installers": true,
+      "yiisoft/yii2-composer": true
     }
   }
 }

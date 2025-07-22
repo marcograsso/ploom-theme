@@ -3,7 +3,7 @@ module.exports = {
   twigSingleQuote: false,
   twigOutputEndblockName: true,
   twigAlwaysBreakObjects: false,
-  twigMultiTags: [],
+  twigMultiTags: ["tag,endtag", "switch,case,default,endswitch"],
   plugins: [
     "@prettier/plugin-php",
     "@zackad/prettier-plugin-twig",
