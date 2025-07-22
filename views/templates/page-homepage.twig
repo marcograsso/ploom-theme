@@ -4,6 +4,26 @@
     {{ include("components/hero-carousel.twig") }}
   </section>
   <section class="flex h-svh w-full flex-col items-center justify-center">
-    <h2 class="text-4xl xl:text-9xl">Sezione</h2>
+    <div class="flex flex-col items-center justify-center">
+      <h2 class="text-4xl xl:text-9xl">Sezione</h2>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
+      </p>
+      {{
+        include(
+          "components/button.twig",
+          {
+            label: "Read more",
+            size: "lg",
+            variant: "secondary",
+            attributes: {
+              class: "mt-8",
+              "x-data": true,
+              "@click.prevent": "console.log('clicked')"
+            }
+          }
+        )
+      }}
+    </div>
   </section>
 {% endblock content %}

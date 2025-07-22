@@ -1,17 +1,9 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/forms";
 
 @theme {
-  --font-sans: "Inter", "sans-serif";
+  --font-sans: "Geist Variable", "sans-serif";
+  --font-mono: "Geist Mono Variable", "monospace";
 }
 
-@supports (font-variation-settings: normal) {
-  @theme {
-    --font-sans: "InterVariable", sans-serif;
-  }
-  :root {
-    font-optical-sizing: auto;
-  }
-}
-
-@plugin "@tailwindcss/forms";
 @import "./base.css";

@@ -4,6 +4,8 @@ use Timber\Site;
 use Timber\Timber;
 use Timber\URLHelper;
 use localghost\Twig\Extra\Hateml\HatemlExtension;
+use TalesFromADev\Twig\Extra\Tailwind\TailwindExtension;
+use TalesFromADev\Twig\Extra\Tailwind\TailwindRuntime;
 
 require_once "vite.php";
 
@@ -177,6 +179,13 @@ class StarterSite extends Site
     public function add_to_twig($twig)
     {
         $twig->addExtension(new HatemlExtension());
+        $twig->addExtension(new \Twig\Extra\Html\HtmlExtension());
+        $twig->addRuntimeLoader(
+            new \Twig\RuntimeLoader\FactoryRuntimeLoader([
+                TailwindRuntime::class => fn() => new TailwindRuntime(),
+            ]),
+        );
+        $twig->addExtension(new TailwindExtension());
 
         $twig->addFilter(
             new \Twig\TwigFilter("ray", function (...$params) {

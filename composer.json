@@ -12,7 +12,9 @@
     "timber/timber": "^2.2",
     "upstatement/routes": "^0.9.1",
     "localghost/twig-hateml": "@dev",
-    "spatie/ray": "^1.42"
+    "spatie/ray": "^1.42",
+    "twig/html-extra": "^3.21",
+    "tales-from-a-dev/twig-tailwind-extra": "^0.5.0"
   },
   "require-dev": {
     "php-stubs/acf-pro-stubs": "^6.2",

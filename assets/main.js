@@ -1,3 +1,5 @@
+import "non.geist";
+import "non.geist/mono";
 import "./styles/main.css";
 
 import Alpine from "alpinejs";
