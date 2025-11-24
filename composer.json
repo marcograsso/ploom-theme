@@ -2,24 +2,21 @@
   "name": "localghost/wp-starter",
   "description": "WordPress + Timber starter theme",
   "type": "wordpress-theme",
-  "repositories": [
-    {
-      "type": "path",
-      "url": "/Users/y/projects/twig-hateml/"
-    }
-  ],
   "require": {
-    "timber/timber": "^2.2",
-    "upstatement/routes": "^0.9.1",
-    "localghost/twig-hateml": "@dev",
-    "spatie/ray": "^1.42",
-    "twig/html-extra": "^3.21",
-    "tales-from-a-dev/twig-tailwind-extra": "^0.5.0"
+    "localghost/twig-hateml": "^0.0.1",
+    "spatie/ray": "^1.44.1",
+    "tales-from-a-dev/twig-tailwind-extra": "^1.0.0",
+    "timber/timber": "^2.3.3",
+    "twig/html-extra": "^3.22.1",
+    "upstatement/routes": "^0.9.2",
+    "vinkla/extended-acf": "^14.6",
+    "johnbillion/extended-cpts": "^5.1",
+    "yiisoft/arrays": "^3.2"
   },
   "require-dev": {
-    "php-stubs/acf-pro-stubs": "^6.2",
-    "php-stubs/woocommerce-stubs": "^9.1",
-    "php-stubs/wordpress-stubs": "^6.6"
+    "php-stubs/acf-pro-stubs": "^6.5",
+    "php-stubs/woocommerce-stubs": "^10.3.5",
+    "php-stubs/wordpress-stubs": "^6.8.3"
   },
   "config": {
     "allow-plugins": {

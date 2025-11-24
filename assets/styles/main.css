@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
 
 @theme {
   --font-sans: "Geist Variable", "sans-serif";
@@ -7,3 +8,11 @@
 }
 
 @import "./base.css";
+
+@utility debug {
+  @apply outline outline-red-500;
+}
+
+@utility pressable {
+  @apply cursor-pointer transition-transform duration-150 ease-in-out active:scale-98;
+}
