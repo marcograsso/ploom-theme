@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "jaq -i '.vite.environment = \"development\"' config.json && cross-env NODE_ENV=development vite",
     "watch": "npm run dev",
-    "build": "vite build && jaq -i '.vite.environment = \"production\"' config.json",
-    "clean": "rm -rf node_modules"
+    "build": "vite build && jaq -i '.vite.environment = \"production\"' config.json && npm run svgo",
+    "clean": "rm -rf node_modules",
+    "svgo": "svgo --config=svgo.config.mjs -rf ./views/icons/ -o ./views/icons/"
   },
   "dependencies": {
     "@alpinejs/collapse": "^3.15.2",
