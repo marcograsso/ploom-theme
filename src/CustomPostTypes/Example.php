@@ -3,7 +3,7 @@
 namespace App\CustomPostTypes;
 
 use Extended\ACF\Fields\Text;
-
+use Extended\ACF\Fields\IconPicker;
 use Extended\ACF\Location;
 
 class Example extends \Timber\Post
@@ -18,6 +18,9 @@ class Example extends \Timber\Post
     public static function register()
     {
         self::register_post_type();
+
+        // Register the custom fields with ACF
+        add_action("acf/include_fields", function () {});
         self::register_custom_fields();
 
         // Add the custom class to the Timber post classmap
@@ -27,7 +30,7 @@ class Example extends \Timber\Post
             ]);
         });
     }
-    public static function register_post_type()
+    private static function register_post_type()
     {
         $name = self::$names["slug"];
         $names = self::$names;
@@ -39,14 +42,17 @@ class Example extends \Timber\Post
         register_extended_post_type($name, $args, $names);
     }
 
-    public static function register_custom_fields()
+    private static function register_custom_fields()
     {
         register_extended_field_group([
             "title" => self::$names["singular"],
             "location" => [Location::where("post_type", self::$names["slug"])],
             "hide_on_screen" => ["the_content"],
             "style" => "",
-            "fields" => [Text::make("Testo", "text")],
+            "fields" => [
+                Text::make("Testo", "text"),
+                IconPicker::make("Icon", "icon"),
+            ],
         ]);
     }
 }

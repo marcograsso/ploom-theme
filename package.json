@@ -26,6 +26,7 @@
     "cross-env": "^10.1.0",
     "prettier": "^3.7.4",
     "prettier-plugin-tailwindcss": "^0.7.2",
+    "svgo": "^4.0.0",
     "vite": "^7.2.7",
     "vite-plugin-dev-manifest": "^1.4.1",
     "vite-plugin-mkcert": "^1.17.9"

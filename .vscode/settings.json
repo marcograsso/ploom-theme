@@ -4,5 +4,8 @@
   },
   "prettier.documentSelectors": ["**/*.php"],
   "intelephense.files.maxSize": 10000000,
-  "intelephense.environment.includePaths": ["../vendor/php-stubs/**"]
+  "intelephense.environment.includePaths": [
+    "../vendor/php-stubs/**",
+    "../../plugins/localghost-acf"
+  ]
 }
