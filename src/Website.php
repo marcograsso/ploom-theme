@@ -1,5 +1,7 @@
 <?php
 
+namespace App;
+
 use Timber\Site;
 use Timber\Timber;
 use Timber\URLHelper;
@@ -7,14 +9,17 @@ use localghost\Twig\Extra\Hateml\HatemlExtension;
 use TalesFromADev\Twig\Extra\Tailwind\TailwindExtension;
 use TalesFromADev\Twig\Extra\Tailwind\TailwindRuntime;
 
-require_once "vite.php";
+use App\Vite;
+use App\CustomPostTypes\Example;
 
-class StarterSite extends Site
+class Website extends Site
 {
     public function __construct()
     {
         add_action("after_setup_theme", [$this, "theme_supports"]);
         add_action("wp_enqueue_scripts", [$this, "enqueue_assets"]);
+
+        add_action("init", [$this, "register_custom_post_types"]);
 
         add_filter("timber/context", [$this, "add_to_context"]);
         add_filter("timber/twig", [$this, "add_to_twig"]);
@@ -94,6 +99,11 @@ class StarterSite extends Site
         //         echo '<script type="module" crossorigin src="http://localhost:3000/assets/styles/admin.css"></script>';
         //     });
         // }
+    }
+
+    public function register_custom_post_types()
+    {
+        Example::register();
     }
 
     /**

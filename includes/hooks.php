@@ -16,7 +16,7 @@ function my_acfe_modules()
 // Fixes site previews when shared on Discord
 add_filter(
     "oembed_response_data",
-    "disable_embeds_filter_oembed_response_data_"
+    "disable_embeds_filter_oembed_response_data_",
 );
 function disable_embeds_filter_oembed_response_data_($data)
 {

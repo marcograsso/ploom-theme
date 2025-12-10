@@ -22,7 +22,7 @@ if (is_home()) {
     array_unshift(
         $templates,
         "templates/front-page.twig",
-        "templates/home.twig"
+        "templates/home.twig",
     );
 }
 
