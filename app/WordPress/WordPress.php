@@ -43,6 +43,12 @@ class WordPress
         // Remove oEmbeds.
         remove_action("wp_head", "wp_oembed_add_discovery_links", 10);
         remove_action("wp_head", "wp_oembed_add_host_js");
+
+        // Remove password change notification.
+        remove_action(
+            "after_password_reset",
+            "wp_password_change_notification",
+        );
     }
 
     // Disable both post and comment feeds

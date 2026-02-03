@@ -31,9 +31,12 @@ class Website extends Site
             Integrations\AdvancedCustomFields::class,
             Integrations\ACFExtended::class,
             Integrations\TinyMCE::class,
+            Integrations\Polylang::class,
             WordPress\WordPress::class,
             WordPress\LoginPage::class,
             WordPress\DisableComments::class,
+            WordPress\AdminBar::class,
+            WordPress\Dashboard::class,
         ];
 
         $classes = collect($classes)
@@ -75,16 +78,6 @@ class Website extends Site
     #[Action("wp_enqueue_scripts")]
     public function enqueue_frontend_assets()
     {
-        // Remove default styles
-        global $wp_styles;
-        foreach ($wp_styles->queue as $key => $handle) {
-            if (strpos($handle, "wp-block-") === 0) {
-                wp_dequeue_style($handle);
-            }
-        }
-        wp_dequeue_style("global-styles");
-        wp_dequeue_script("jquery");
-
         if (is_array($this->vite->manifest)) {
             if ($this->vite->environment === "production" || is_admin()) {
                 $js_file = "assets/main.js";
