@@ -10,6 +10,8 @@
  *
  */
 
+namespace App;
+
 use Timber\Timber;
 
 $context = Timber::context();
@@ -22,5 +24,5 @@ Timber::render(
         "templates/page-" . $timber_post->slug . ".twig",
         "templates/page.twig",
     ],
-    $context
+    $context,
 );

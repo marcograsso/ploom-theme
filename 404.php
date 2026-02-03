@@ -1,8 +1,9 @@
 <?php
-
 /**
  * The template for the 404 page
  */
+
+namespace App;
 
 use Timber\Timber;
 

@@ -1,12 +1,5 @@
 <?php
 
-add_action("acf/init", "my_acfe_modules");
-function my_acfe_modules()
-{
-    // Enable Classic Editor
-    acf_update_setting("acfe/modules/classic_editor", true);
-}
-
 // Fixes site previews when shared on Discord
 add_filter(
     "oembed_response_data",

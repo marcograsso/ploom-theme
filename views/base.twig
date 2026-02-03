@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 <html {{ site.language_attributes }}>
   {% block head %}
-    {% include "partials/head.twig" %}
+    {{ include("parts/head.twig") }}
   {% endblock head %}
-  <body class="{{ body_class }}">
+  <body {{ attr({ class: [body_class, "antialiased"] }) }}>
     {{ function("wp_body_open") }}
-    {% include "components/tailwind-debugger.twig" %}
+
+    {% if environment == "development" %}
+      {{ include("components/tailwind-debugger.twig") }}
+    {% endif %}
+
     <main>
       {% block content %}
 
       {% endblock content %}
     </main>
+
     {% block footer %}
 
     {% endblock footer %}
+
     {{ function("wp_footer") }}
-    {% do action("get_footer") %}
+    {% do action("get_footer", null) %}
   </body>
 </html>

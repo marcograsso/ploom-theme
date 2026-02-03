@@ -7,6 +7,8 @@
  *
  */
 
+namespace App;
+
 use Timber\Timber;
 
 $context = Timber::context();
@@ -14,7 +16,7 @@ $context = Timber::context();
 if (isset($context["author"])) {
     $context["title"] = sprintf(
         __("Archive of %s", "timber-starter"),
-        $context["author"]->name()
+        $context["author"]->name(),
     );
 }
 

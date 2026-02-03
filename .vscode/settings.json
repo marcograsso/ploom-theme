@@ -4,8 +4,10 @@
   },
   "prettier.documentSelectors": ["**/*.php"],
   "intelephense.files.maxSize": 10000000,
-  "intelephense.environment.includePaths": [
-    "../vendor/php-stubs/**",
-    "../../plugins/localghost-acf"
-  ]
+  "intelephense.environment.includePaths": ["../vendor/php-stubs/**"],
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "package.json": "package-lock.json, *.config.js, *.config.cjs, *.config.mjs, composer.json, composer.lock, config.json, .gitignore"
+  }
 }

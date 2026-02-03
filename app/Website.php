@@ -11,30 +11,69 @@ use TalesFromADev\Twig\Extra\Tailwind\TailwindRuntime;
 
 use App\Vite;
 use App\CustomPostTypes\Example;
+use Yard\Hook\Action;
+use Yard\Hook\Filter;
+
+use ReflectionClass;
 
 class Website extends Site
 {
     public function __construct()
     {
-        add_action("after_setup_theme", [$this, "theme_supports"]);
-        add_action("wp_enqueue_scripts", [$this, "enqueue_assets"]);
-
-        add_action("init", [$this, "register_custom_post_types"]);
-
-        add_filter("timber/context", [$this, "add_to_context"]);
-        add_filter("timber/twig", [$this, "add_to_twig"]);
-        add_filter("timber/twig/environment/options", [
-            $this,
-            "update_twig_environment_options",
-        ]);
-
-        add_action("admin_enqueue_scripts", [$this, "admin_enqueue_scripts"]);
         $this->vite = new Vite();
-
+        $this->register_integrations();
         parent::__construct();
     }
 
-    public function enqueue_assets()
+    public function register_integrations()
+    {
+        $classes = [
+            Integrations\AdvancedCustomFields::class,
+            Integrations\ACFExtended::class,
+            Integrations\TinyMCE::class,
+            WordPress\WordPress::class,
+            WordPress\LoginPage::class,
+            WordPress\DisableComments::class,
+        ];
+
+        $classes = collect($classes)
+            ->filter(function ($class) {
+                if (!is_string($class)) {
+                    return false;
+                }
+
+                return class_exists($class);
+            })
+            ->filter(function ($class) {
+                $reflectionClass = new ReflectionClass($class);
+                $attributes = $reflectionClass->getAttributes(
+                    IsPluginActive::class,
+                );
+
+                if (count($attributes) === 0) {
+                    return true;
+                }
+
+                foreach ($attributes as $attribute) {
+                    $plugin = $attribute->newInstance();
+
+                    return $plugin->is_active();
+                }
+
+                return false;
+            })
+            ->toArray();
+
+        $hook_registrar = new \Yard\Hook\Registrar($classes);
+        $hook_registrar->registerHooks();
+
+        foreach ($classes as $class) {
+            new $class();
+        }
+    }
+
+    #[Action("wp_enqueue_scripts")]
+    public function enqueue_frontend_assets()
     {
         // Remove default styles
         global $wp_styles;
@@ -82,7 +121,8 @@ class Website extends Site
         }
     }
 
-    public function admin_enqueue_scripts()
+    #[Action("admin_enqueue_scripts")]
+    public function enqueue_backend_assets()
     {
         // if (is_array($this->vite->manifest)) {
         //     wp_enqueue_style(
@@ -101,6 +141,7 @@ class Website extends Site
         // }
     }
 
+    #[Action("init")]
     public function register_custom_post_types()
     {
         Example::register();
@@ -111,6 +152,7 @@ class Website extends Site
      *
      * @param string $context context['this'] Being the Twig's {{ this }}.
      */
+    #[Filter("timber/context")]
     public function add_to_context($context)
     {
         $context["menu"] = Timber::get_menu();
@@ -128,10 +170,12 @@ class Website extends Site
         $context["options"] = get_fields("options"); // ACF options
         $context["site"] = $this;
         $context["current_url"] = URLHelper::get_current_url();
+        $context["environment"] = $this->vite->environment;
 
         return $context;
     }
 
+    #[Action("after_setup_theme")]
     public function theme_supports()
     {
         // Add default posts and comments RSS feed links to head.
@@ -186,6 +230,7 @@ class Website extends Site
      *
      * @param Twig\Environment $twig get extension.
      */
+    #[Filter("timber/twig")]
     public function add_to_twig($twig)
     {
         $twig->addExtension(new HatemlExtension());
@@ -219,6 +264,7 @@ class Website extends Site
      *
      * @return array
      */
+    #[Filter("timber/twig/environment/options")]
     function update_twig_environment_options($options)
     {
         // $options['autoescape'] = true;

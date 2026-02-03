@@ -25,6 +25,9 @@ export default defineConfig(({ mode }) => {
       hmr: {
         host: "localhost",
       },
+      watch: {
+        include: ["views/**/*"],
+      },
     },
     esbuild: {
       // Remove console logs from production builds
