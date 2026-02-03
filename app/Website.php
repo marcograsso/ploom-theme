@@ -76,8 +76,6 @@ class Website extends Site
         $vite = $this->vite;
         $js_file = "src/admin.js";
 
-        ray($vite);
-
         if (is_array($vite->manifest)) {
             if ($vite->environment === "production" || is_admin()) {
                 wp_enqueue_style(
@@ -99,7 +97,6 @@ class Website extends Site
 
         if ($vite->environment === "development") {
             add_action("admin_head", function () use ($vite, $js_file) {
-                ray("Admin development");
                 echo '<script type="module" crossorigin src="' .
                     $vite->dev_manifest["url"] .
                     '@vite/client"></script>';

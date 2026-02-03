@@ -25,3 +25,11 @@ table.widefat {
 #screen-meta {
   @apply rounded-bl;
 }
+
+#wpadminbar #wp-admin-bar-my-account.with-avatar > a img,
+#wp-admin-bar-user-info .avatar {
+  @apply rounded-full;
+}
+#wpadminbar .menupop .ab-sub-wrapper {
+  @apply rounded-b;
+}
