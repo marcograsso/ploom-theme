@@ -12,6 +12,8 @@ use Timber\Timber;
 $context = Timber::context();
 $post = $context["post"];
 $templates = [
+    "single-" . $post->ID . ".twig",
+    "single-" . $post->slug . ".twig",
     "templates/single-" . $post->post_type . ".twig",
     "templates/single.twig",
 ];

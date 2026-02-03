@@ -11,6 +11,7 @@ class Bootstrap
     {
         Timber::init();
         $this->boot_classes();
+        $this->register_fields();
     }
 
     // Initialize all the classes and register their hooks.
@@ -27,6 +28,7 @@ class Bootstrap
             WordPress\DisableComments::class,
             WordPress\AdminBar::class,
             WordPress\Dashboard::class,
+            ThemeOptions::class,
         ];
 
         $classes = collect($classes)
@@ -62,6 +64,33 @@ class Bootstrap
 
         foreach ($classes as $class) {
             new $class();
+        }
+    }
+
+    public function require_files_in_folder($folder)
+    {
+        if (is_dir($folder)) {
+            $iterator = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator(
+                    $folder,
+                    \RecursiveDirectoryIterator::SKIP_DOTS,
+                ),
+            );
+
+            foreach ($iterator as $file) {
+                if ($file->getExtension() === "php") {
+                    require_once $file->getPathname();
+                }
+            }
+        }
+    }
+
+    public function register_fields()
+    {
+        $folders = [STYLESHEETPATH . "/app/Fields/Groups"];
+
+        foreach ($folders as $folder) {
+            $this->require_files_in_folder($folder);
         }
     }
 }

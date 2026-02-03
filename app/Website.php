@@ -10,7 +10,6 @@ use TalesFromADev\Twig\Extra\Tailwind\TailwindExtension;
 use TalesFromADev\Twig\Extra\Tailwind\TailwindRuntime;
 
 use App\Vite;
-use App\CustomPostTypes\Example;
 use Yard\Hook\Action;
 use Yard\Hook\Filter;
 
@@ -20,6 +19,18 @@ class Website extends Site
     {
         $this->vite = new Vite();
         parent::__construct();
+    }
+
+    #[Action("init")]
+    public function register_post_types()
+    {
+        PostTypes\Example::register();
+    }
+
+    #[Action("init")]
+    public function register_taxonomies()
+    {
+        Taxonomies\ExampleTaxonomy::register();
     }
 
     #[Action("wp_enqueue_scripts")]
@@ -81,12 +92,6 @@ class Website extends Site
         // }
     }
 
-    #[Action("init")]
-    public function register_custom_post_types()
-    {
-        Example::register();
-    }
-
     /**
      * This is where you add some context
      *
@@ -95,6 +100,7 @@ class Website extends Site
     #[Filter("timber/context")]
     public function add_to_context($context)
     {
+        $context["site"] = $this;
         $context["menu"] = Timber::get_menu();
 
         // Set all nav menus in context.
@@ -107,8 +113,7 @@ class Website extends Site
             $menu = Timber::get_menu($location);
             $context["menus"][$location] = $menu;
         }
-        $context["options"] = get_fields("options"); // ACF options
-        $context["site"] = $this;
+
         $context["current_url"] = URLHelper::get_current_url();
         $context["environment"] = $this->vite->environment;
 
@@ -210,5 +215,29 @@ class Website extends Site
         // $options['autoescape'] = true;
 
         return $options;
+    }
+
+    // Redirect non-users to coming soon page, but allow certain other pages
+    #[Action("template_redirect")]
+    function coming_soon_redirect()
+    {
+        global $pagenow;
+
+        $is_coming_soon = get_field("enable_coming_soon", "option");
+
+        if (!$is_coming_soon) {
+            return;
+        }
+
+        $allowed_pages = ["login", "coming-soon"];
+
+        if (
+            !is_user_logged_in() &&
+            !is_page($allowed_pages) &&
+            $pagenow != "wp-login.php"
+        ) {
+            wp_redirect(home_url("coming-soon"));
+            exit();
+        }
     }
 }

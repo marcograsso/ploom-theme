@@ -56,6 +56,14 @@ class AdvancedCustomFields
         }
     }
 
+    #[Filter("timber/context")]
+    public function add_options_to_context($context)
+    {
+        $context["options"] = get_fields("options");
+
+        return $context;
+    }
+
     #[Filter("acf_icon_path_suffix")]
     public function icon_path_suffix($path_suffix)
     {

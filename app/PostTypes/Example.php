@@ -1,6 +1,6 @@
 <?php
 
-namespace App\CustomPostTypes;
+namespace App\PostTypes;
 
 use Extended\ACF\Fields\Text;
 use Extended\ACF\Fields\IconPicker;
