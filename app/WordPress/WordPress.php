@@ -248,4 +248,13 @@ class WordPress
 
         return $data;
     }
+
+    #[Action("admin_head")]
+    public function remove_help_tabs(): void
+    {
+        $screen = get_current_screen();
+        if ($screen) {
+            $screen->remove_help_tabs();
+        }
+    }
 }

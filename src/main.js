@@ -3,9 +3,9 @@ import "non.geist/mono";
 
 import Alpine from "alpinejs";
 
-import initHeroCarousels from "./scripts/components/hero-carousel";
+import initHeroCarousels from "./components/hero-carousel";
 
-import "./styles/main.css";
+import "./main.css";
 
 import.meta.glob("../views/**/*.js", { eager: true });
 import.meta.glob("../views/**/*.css", { eager: true });

@@ -1,0 +1,27 @@
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme) source(none);
+
+.tailwind {
+  @import "tailwindcss/utilities.css" layer(utilities) source(none);
+}
+@theme {
+  --color-borders: lab(2.75381% 0 0);
+}
+
+.postbox,
+table.widefat {
+  @apply ring-borders/10 overflow-hidden rounded border-none shadow-none ring-1;
+}
+
+.postbox-header {
+  border-bottom: none;
+}
+
+#screen-meta,
+#screen-meta-links .show-settings {
+  @apply border-borders/10;
+}
+
+#screen-meta {
+  @apply rounded-bl;
+}

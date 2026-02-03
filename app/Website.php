@@ -36,20 +36,18 @@ class Website extends Site
     #[Action("wp_enqueue_scripts")]
     public function enqueue_frontend_assets()
     {
-        if (is_array($this->vite->manifest)) {
-            if ($this->vite->environment === "production" || is_admin()) {
-                $js_file = "assets/main.js";
+        $vite = $this->vite;
+
+        if (is_array($vite->manifest)) {
+            if ($vite->environment === "production" || is_admin()) {
+                $js_file = "src/main.js";
                 wp_enqueue_style(
                     "main",
-                    $this->vite->dist_uri .
-                        "/" .
-                        $this->vite->manifest[$js_file]["css"][0],
+                    $vite->dist_uri . "/" . $vite->manifest[$js_file]["css"][0],
                 );
                 wp_enqueue_script(
                     "main",
-                    $this->vite->dist_uri .
-                        "/" .
-                        $this->vite->manifest[$js_file]["file"],
+                    $vite->dist_uri . "/" . $vite->manifest[$js_file]["file"],
                     [],
                     "",
                     [
@@ -60,14 +58,14 @@ class Website extends Site
             }
         }
 
-        if ($this->vite->environment === "development") {
-            add_action("wp_head", function () {
+        if ($vite->environment === "development") {
+            add_action("wp_head", function () use ($vite) {
                 echo '<script type="module" crossorigin src="' .
-                    $this->vite->dev_manifest["url"] .
+                    $vite->dev_manifest["url"] .
                     '@vite/client"></script>';
                 echo '<script type="module" crossorigin src="' .
-                    $this->vite->dev_manifest["url"] .
-                    'assets/main.js"></script>';
+                    $vite->dev_manifest["url"] .
+                    'src/main.js"></script>';
             });
         }
     }
@@ -75,21 +73,42 @@ class Website extends Site
     #[Action("admin_enqueue_scripts")]
     public function enqueue_backend_assets()
     {
-        // if (is_array($this->vite->manifest)) {
-        //     wp_enqueue_style(
-        //         "admin-styles",
-        //         $this->vite->dist_uri .
-        //             "/" .
-        //             $this->vite->manifest["assets/styles/admin.css"]["file"]
-        //     );
-        // }
+        $vite = $this->vite;
+        $js_file = "src/admin.js";
 
-        // if ($this->vite->environment === "development") {
-        //     add_action("admin_head", function () {
-        //         echo '<script type="module" crossorigin src="http://localhost:3000/@vite/client"></script>';
-        //         echo '<script type="module" crossorigin src="http://localhost:3000/assets/styles/admin.css"></script>';
-        //     });
-        // }
+        ray($vite);
+
+        if (is_array($vite->manifest)) {
+            if ($vite->environment === "production" || is_admin()) {
+                wp_enqueue_style(
+                    "admin",
+                    $vite->dist_uri . "/" . $vite->manifest[$js_file]["css"][0],
+                );
+                wp_enqueue_script(
+                    "admin",
+                    $vite->dist_uri . "/" . $vite->manifest[$js_file]["file"],
+                    [],
+                    "",
+                    [
+                        "strategy" => "defer",
+                        "in_footer" => true,
+                    ],
+                );
+            }
+        }
+
+        if ($vite->environment === "development") {
+            add_action("admin_head", function () use ($vite, $js_file) {
+                ray("Admin development");
+                echo '<script type="module" crossorigin src="' .
+                    $vite->dev_manifest["url"] .
+                    '@vite/client"></script>';
+                echo '<script type="module" crossorigin src="' .
+                    $vite->dev_manifest["url"] .
+                    $js_file .
+                    '"></script>';
+            });
+        }
     }
 
     /**

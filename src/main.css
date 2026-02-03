@@ -7,7 +7,7 @@
   --font-mono: "GeistMono-Variable", "monospace";
 }
 
-@import "./base.css";
+@import "./styles/fonts.css";
 
 @utility debug {
   @apply outline outline-red-500;

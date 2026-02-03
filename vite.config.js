@@ -7,7 +7,7 @@ import tailwindcss from "@tailwindcss/vite";
 const ROOT = path.resolve("../../../");
 const BASE = __dirname.replace(ROOT, "");
 const destination = "./dist";
-const entries = ["./assets/main.js"];
+const entries = ["./src/main.js", "./src/admin.js"];
 
 export default defineConfig(({ mode }) => {
   return {
