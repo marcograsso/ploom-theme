@@ -237,4 +237,15 @@ class WordPress
 
         return $settings;
     }
+
+    // Fixes site previews when shared on Discord
+    #[Filter("oembed_response_data")]
+    public function disable_embeds_filter_oembed_response_data(
+        array $data,
+    ): array {
+        unset($data["author_url"]);
+        unset($data["author_name"]);
+
+        return $data;
+    }
 }

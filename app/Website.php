@@ -14,65 +14,12 @@ use App\CustomPostTypes\Example;
 use Yard\Hook\Action;
 use Yard\Hook\Filter;
 
-use ReflectionClass;
-
 class Website extends Site
 {
     public function __construct()
     {
         $this->vite = new Vite();
-        $this->register_integrations();
         parent::__construct();
-    }
-
-    public function register_integrations()
-    {
-        $classes = [
-            Integrations\AdvancedCustomFields::class,
-            Integrations\ACFExtended::class,
-            Integrations\TinyMCE::class,
-            Integrations\Polylang::class,
-            WordPress\WordPress::class,
-            WordPress\LoginPage::class,
-            WordPress\DisableComments::class,
-            WordPress\AdminBar::class,
-            WordPress\Dashboard::class,
-        ];
-
-        $classes = collect($classes)
-            ->filter(function ($class) {
-                if (!is_string($class)) {
-                    return false;
-                }
-
-                return class_exists($class);
-            })
-            ->filter(function ($class) {
-                $reflectionClass = new ReflectionClass($class);
-                $attributes = $reflectionClass->getAttributes(
-                    IsPluginActive::class,
-                );
-
-                if (count($attributes) === 0) {
-                    return true;
-                }
-
-                foreach ($attributes as $attribute) {
-                    $plugin = $attribute->newInstance();
-
-                    return $plugin->is_active();
-                }
-
-                return false;
-            })
-            ->toArray();
-
-        $hook_registrar = new \Yard\Hook\Registrar($classes);
-        $hook_registrar->registerHooks();
-
-        foreach ($classes as $class) {
-            new $class();
-        }
     }
 
     #[Action("wp_enqueue_scripts")]
