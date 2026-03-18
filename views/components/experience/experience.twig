@@ -1,5 +1,5 @@
 <section class="w-full" id="experience">
-  <div class="pb-30 pb-200">
+  <div class="pb-30">
     {{
       include(
         "components/heading.twig",
@@ -11,5 +11,30 @@
         }
       )
     }}
+    <div class="main-container">
+      {% if post.experience_group.cities.dates %}
+        <div
+          class="animate-scroll-stagger flex flex-col items-start justify-center gap-10 lg:flex-row lg:items-center lg:gap-20"
+        >
+          {% for item in post.experience_group.cities.dates %}
+            <div class="flex flex-col gap-3 text-center">
+              <span class="flex flex-row items-end gap-2">
+                <span class="w-6">
+                  {% include "views/icons/ploom/img-icon-city.svg" %}
+                </span>
+                <span class="text-xl leading-[115%] font-medium">
+                  {{ item.city_name }}
+                </span>
+              </span>
+              <span
+                class="text-neutral-white/80 block text-xl leading-[125%] font-light"
+              >
+                {{ item.date }}
+              </span>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
   </div>
 </section>

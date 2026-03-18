@@ -30,4 +30,20 @@ export function initAnimations() {
       },
     });
   });
+
+  // Scroll-triggered staggered fade in for children of .animate-scroll-stagger
+  document.querySelectorAll(".animate-scroll-stagger").forEach((el) => {
+    gsap.from(el.children, {
+      y: 40,
+      opacity: 0,
+      duration: 0.7,
+      ease: "power3.out",
+      stagger: 0.3,
+      scrollTrigger: {
+        trigger: el,
+        start: "top 88%",
+        once: true,
+      },
+    });
+  });
 }

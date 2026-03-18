@@ -17,7 +17,7 @@
     @resize.window.debounce="mounted = false; requestAnimationFrame(() => mounted = true)"
   >
     <div
-      class="mt-10 flex w-full flex-col flex-col-reverse items-center justify-center gap-10 lg:mt-20 lg:flex lg:flex-row"
+      class="mt-20 flex w-full flex-col flex-col-reverse items-center justify-center gap-10 lg:mt-20 lg:flex lg:flex-row"
     >
       <div class="w-full flex-1 lg:col-start-1">
         <div class="grid">
@@ -25,15 +25,27 @@
             class="col-start-1 row-start-1 lg:transition-all lg:duration-500 lg:ease-out"
             :class="active === 'arctic' ? 'opacity-100 scale-100' : 'lg:opacity-0 lg:scale-95 lg:pointer-events-none'"
           >
-            <img src="{{ theme.link }}/assets/images/ms-product-arcticmint.jpg" class="w-full lg:hidden" />
-            <img src="{{ theme.link }}/assets/images/ds-product-arcticmint.jpg" class="hidden w-full lg:block" />
+            <img
+              src="{{ theme.link }}/assets/images/ms-product-arcticmint.jpg"
+              class="w-full lg:hidden"
+            />
+            <img
+              src="{{ theme.link }}/assets/images/ds-product-arcticmint.jpg"
+              class="hidden w-full lg:block"
+            />
           </div>
           <div
             class="col-start-1 row-start-1 lg:transition-all lg:duration-500 lg:ease-out"
             :class="active === 'wild' ? 'opacity-100 scale-100' : 'lg:opacity-0 lg:scale-95 lg:pointer-events-none'"
           >
-            <img src="{{ theme.link }}/assets/images/ms-product-wildberry.jpg" class="w-full lg:hidden" />
-            <img src="{{ theme.link }}/assets/images/ds-product-wildberry.jpg" class="hidden w-full lg:block" />
+            <img
+              src="{{ theme.link }}/assets/images/ms-product-wildberry.jpg"
+              class="w-full lg:hidden"
+            />
+            <img
+              src="{{ theme.link }}/assets/images/ds-product-wildberry.jpg"
+              class="hidden w-full lg:block"
+            />
           </div>
         </div>
         {# Description Mobile #}
@@ -99,6 +111,7 @@
               x-ref="arcticBtn"
               class="focusable relative z-10 w-1/2 cursor-pointer rounded-full px-6 py-3 text-center font-medium lg:w-auto"
               @click="active = 'arctic'"
+              :class="active === 'arctic' ? '' : 'hover:text-neutral-white/80'"
             >
               Arctic Mint
             </button>
@@ -106,6 +119,7 @@
               x-ref="wildBtn"
               class="focusable relative z-10 w-1/2 cursor-pointer rounded-full px-6 py-3 text-center font-medium lg:w-auto"
               @click="active = 'wild'"
+              :class="active === 'wild' ? '' : 'hover:text-neutral-white/80'"
             >
               Wild Berry
             </button>
