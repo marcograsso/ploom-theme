@@ -1,8 +1,165 @@
-<section class="w-full">
-  {{ include("components/heading.twig", {
-    surtitle: post.flavors_group.surtitle,
-    title: post.flavors_group.title,
-    subtitle: post.flavors_group.subtitle,
-    notes: post.flavors_group.notes
-  }) }}
+<section class="w-full" id="flavors">
+  {{
+    include(
+      "components/heading.twig",
+      {
+        surtitle: post.flavors_group.surtitle,
+        title: post.flavors_group.title,
+        subtitle: post.flavors_group.subtitle,
+        notes: post.flavors_group.notes
+      }
+    )
+  }}
+  <div
+    class="lg:main-container"
+    x-data="{ active: 'arctic', mounted: false }"
+    x-init="requestAnimationFrame(() => mounted = true)"
+    @resize.window.debounce="mounted = false; requestAnimationFrame(() => mounted = true)"
+  >
+    <div
+      class="mt-10 flex w-full flex-col flex-col-reverse items-center justify-center gap-10 lg:mt-20 lg:flex lg:flex-row"
+    >
+      <div class="w-full flex-1 lg:col-start-1">
+        <img
+          src="{{ theme.link }}/assets/images/ms-product-arcticmint.jpg"
+          class="w-full lg:hidden"
+          x-show="active === 'arctic'"
+        />
+        <img
+          src="{{ theme.link }}/assets/images/ds-product-arcticmint.jpg"
+          class="hidden w-full lg:block"
+          x-show="active === 'arctic'"
+        />
+        <img
+          src="{{ theme.link }}/assets/images/ms-product-wildberry.jpg"
+          class="w-full lg:hidden"
+          x-show="active === 'wild'"
+        />
+        <img
+          src="{{ theme.link }}/assets/images/ds-product-wildberry.jpg"
+          class="hidden w-full lg:block"
+          x-show="active === 'wild'"
+        />
+        {# Description Mobile #}
+        <div
+          class="order-3 mx-6 grid w-auto pt-6! md:mx-10 lg:order-none lg:hidden"
+        >
+          <div
+            class="col-start-1 row-start-1 flex flex-col gap-3"
+            :class="active === 'arctic' ? 'visible' : 'invisible'"
+          >
+            <h3 class="text-3xl leading-[125%] font-light">Arctic Mint</h3>
+            <h3
+              class="text-arctic-mint {{
+              post.flavors_group.arctic.description
+                ? "text-2xl"
+                : "text-3xl"
+              }} leading-[125%] font-light"
+            >
+              {{ post.flavors_group.arctic.claim }}
+            </h3>
+            <span
+              class="text-neutral-white/80 font-sans text-xl leading-[125%] font-light tracking-normal text-pretty 2xl:text-balance [&_b]:font-medium [&_br]:hidden sm:[&_br]:inline [&_p]:mb-6 [&_strong]:font-medium"
+            >
+              {{ post.flavors_group.arctic.description }}
+            </span>
+          </div>
+          <div
+            class="col-start-1 row-start-1 flex flex-col gap-3"
+            :class="active === 'wild' ? 'visible' : 'invisible'"
+          >
+            <h3 class="text-3xl leading-[125%] font-light">Wild Berry</h3>
+            <h3
+              class="text-wild-berry {{
+              post.flavors_group.wild.description
+                ? "text-2xl"
+                : "text-3xl"
+              }} leading-[125%] font-light"
+            >
+              {{ post.flavors_group.wild.claim }}
+            </h3>
+            <span
+              class="text-neutral-white/80 font-sans text-xl leading-[125%] font-light tracking-normal text-pretty 2xl:text-balance [&_b]:font-medium [&_br]:hidden sm:[&_br]:inline [&_p]:mb-6 [&_strong]:font-medium"
+            >
+              {{ post.flavors_group.wild.description }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="contents flex w-full flex-col gap-6 lg:w-fit lg:flex-1">
+        {# Toggle #}
+        <div class="mx-6 md:mx-10 lg:mx-0">
+          <div
+            class="relative flex w-full rounded-full p-1 lg:inline-flex lg:w-auto"
+            style="background-image: linear-gradient(92deg, #148269 0%, #2F3086 50%, #7B308B 100%);"
+          >
+            <div
+              x-show="mounted"
+              :class="mounted ? 'transition-all duration-300 ease-in-out' : ''"
+              class="absolute top-1 bottom-1 rounded-full bg-black/50"
+              :style="`left: ${active === 'arctic' ? $refs.arcticBtn.offsetLeft : $refs.wildBtn.offsetLeft}px; width: ${active === 'arctic' ? $refs.arcticBtn.offsetWidth : $refs.wildBtn.offsetWidth}px`"
+            ></div>
+            <button
+              x-ref="arcticBtn"
+              class="focusable relative z-10 w-1/2 cursor-pointer rounded-full px-6 py-3 text-center font-medium lg:w-auto"
+              @click="active = 'arctic'"
+            >
+              Arctic Mint
+            </button>
+            <button
+              x-ref="wildBtn"
+              class="focusable relative z-10 w-1/2 cursor-pointer rounded-full px-6 py-3 text-center font-medium lg:w-auto"
+              @click="active = 'wild'"
+            >
+              Wild Berry
+            </button>
+          </div>
+        </div>
+        {# Description #}
+        <div class="hidden w-full lg:grid">
+          <div
+            class="col-start-1 row-start-1 flex flex-col gap-3"
+            :class="active === 'arctic' ? 'visible' : 'invisible'"
+          >
+            <h3 class="text-3xl leading-[125%] font-light">Arctic Mint</h3>
+            <h3
+              class="text-arctic-mint {{
+              post.flavors_group.arctic.description
+                ? "text-2xl"
+                : "text-3xl"
+              }} leading-[125%] font-light"
+            >
+              {{ post.flavors_group.arctic.claim }}
+            </h3>
+            <span
+              class="text-neutral-white/80 font-sans text-xl leading-[125%] font-light tracking-normal text-pretty 2xl:text-balance [&_b]:font-medium [&_br]:hidden sm:[&_br]:inline [&_p]:mb-6 [&_strong]:font-medium"
+            >
+              {{ post.flavors_group.arctic.description }}
+            </span>
+          </div>
+          <div
+            class="col-start-1 row-start-1 flex flex-col gap-3"
+            :class="active === 'wild' ? 'visible' : 'invisible'"
+          >
+            <h3 class="text-3xl leading-[125%] font-light">Wild Berry</h3>
+            <h3
+              class="text-wild-berry {{
+              post.flavors_group.wild.description
+                ? "text-2xl"
+                : "text-3xl"
+              }} leading-[125%] font-light"
+            >
+              {{ post.flavors_group.wild.claim }}
+            </h3>
+            <span
+              class="text-neutral-white/80 font-sans text-xl leading-[125%] font-light tracking-normal text-pretty 2xl:text-balance [&_b]:font-medium [&_br]:hidden sm:[&_br]:inline [&_p]:mb-6 [&_strong]:font-medium"
+            >
+              {{ post.flavors_group.wild.description }}
+            </span>
+          </div>
+        </div>
+      </div>
+      {# Image — order 2 on mobile, left column on desktop #}
+    </div>
+  </div>
 </section>

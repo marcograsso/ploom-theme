@@ -1,8 +1,15 @@
-<section class="w-full">
-  {{ include("components/heading.twig", {
-    surtitle: post.experience_group.surtitle,
-    title: post.experience_group.title,
-    subtitle: post.experience_group.subtitle,
-    notes: post.experience_group.notes
-  }) }}
+<section class="w-full" id="experience">
+  <div class="py-30">
+    {{
+      include(
+        "components/heading.twig",
+        {
+          surtitle: post.experience_group.surtitle,
+          title: post.experience_group.title,
+          subtitle: post.experience_group.subtitle,
+          notes: post.experience_group.notes
+        }
+      )
+    }}
+  </div>
 </section>
