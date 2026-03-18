@@ -16,9 +16,18 @@ register_extended_field_group([
     "location" => [Location::where("page_type", "=", "front_page")],
     "fields" => [
         Tab::make("Hero"),
-        Textarea::make("Frase ad effetto", "hero_claim")
-            ->rows(3)
-            ->newLines("br"),
+        Group::make("", "hero_group")
+            ->fields(
+                require get_stylesheet_directory() .
+                    "/views/components/hero/hero.php",
+            )
+            ->withSettings([
+                "acfe_seamless_style" => 1,
+                "acfe_group_modal" => 0,
+                "acfe_group_modal_close" => 0,
+                "acfe_group_modal_button" => "",
+                "acfe_group_modal_size" => "large",
+            ]),
     ],
     "style" => "",
     "hide_on_screen" => ["the_content"],

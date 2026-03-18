@@ -1,0 +1,9 @@
+<article id="post-{{ post.ID }}" class="{{ post.class }}">
+  <a href="{{ post.link }}">
+    {% if post.thumbnail %}
+      <img src="{{ post.thumbnail.src }}" alt="{{ post.thumbnail.alt }}">
+    {% endif %}
+    <h2>{{ post.title }}</h2>
+  </a>
+  <div>{{ post.preview }}</div>
+</article>
