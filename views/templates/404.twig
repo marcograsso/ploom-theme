@@ -1,4 +1,39 @@
 {% extends "base.twig" %}
 {% block content %}
-  Sorry, we couldn't find what you're looking for.
+  <div
+    class="bg-norepeat relative w-full bg-black bg-cover bg-[center_bottom] pt-50 pb-25 lg:pt-60 lg:pb-60"
+    style="background-image: url('{{
+    theme.link
+    }}/assets/images/ds-hero-bg.jpg');"
+    data-mobile-bg="{{ theme.link }}/assets/images/ms-hero-bg.png"
+    x-data="{ updateBg() { this.$el.style.backgroundImage = window.innerWidth < 768 ? 'url(' + this.$el.dataset.mobileBg + ')' : 'url({{
+    theme.link
+    }}/assets/images/ds-hero-bg.jpg)' } }"
+    x-init="updateBg()"
+    @resize.window.debounce="updateBg()"
+  >
+    <div class="main-container relative mb-10 flex items-center justify-center">
+      <div
+        data-hero
+        class="flex flex-col items-center justify-center text-left md:text-center lg:w-3/4"
+      >
+        <h1
+          class="text-neutral-white mb-[1.5rem] w-full font-sans text-5xl leading-[125%] font-light tracking-normal md:text-6xl [&_br]:hidden sm:[&_br]:inline"
+        >
+          Errore 404
+        </h1>
+        <h3
+          class="text-neutral-white mb-[3rem] font-sans text-xl leading-[125%] font-light tracking-normal text-pretty 2xl:text-balance [&_b]:font-medium [&_br]:hidden sm:[&_br]:inline [&_strong]:font-medium"
+        >
+          {{ post.hero_group.subtitle }}
+        </h3>
+        <a
+          href="/"
+          class="focusable transitions-colors bg-neutral-white flex w-full items-center justify-center gap-2 rounded-[44px] px-8 py-4 font-sans text-base leading-[125%] font-medium tracking-normal text-black opacity-100 shadow-[0px_0px_16px_0px_#F5F5F599] transition-colors duration-300 hover:text-black/60 md:w-fit"
+        >
+          Torna alla homepage
+        </a>
+      </div>
+    </div>
+  </div>
 {% endblock content %}
