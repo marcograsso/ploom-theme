@@ -1,7 +1,9 @@
 {% extends "base.twig" %}
 
 {% block content %}
-  <section class="flex h-svh w-full">
+  <section class="flex w-full">
     {{ include("components/hero/hero.twig") }}
   </section>
+  {{ include("components/flavors/flavors.twig") }}
+  {{ include("components/experience/experience.twig") }}
 {% endblock content %}

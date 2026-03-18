@@ -28,6 +28,32 @@ register_extended_field_group([
                 "acfe_group_modal_button" => "",
                 "acfe_group_modal_size" => "large",
             ]),
+        Tab::make("Flavors"),
+        Group::make("", "flavors_group")
+            ->fields(
+                require get_stylesheet_directory() .
+                    "/views/components/flavors/flavors.php",
+            )
+            ->withSettings([
+                "acfe_seamless_style" => 1,
+                "acfe_group_modal" => 0,
+                "acfe_group_modal_close" => 0,
+                "acfe_group_modal_button" => "",
+                "acfe_group_modal_size" => "large",
+            ]),
+        Tab::make("Experience"),
+        Group::make("", "experience_group")
+            ->fields(
+                require get_stylesheet_directory() .
+                    "/views/components/experience/experience.php",
+            )
+            ->withSettings([
+                "acfe_seamless_style" => 1,
+                "acfe_group_modal" => 0,
+                "acfe_group_modal_close" => 0,
+                "acfe_group_modal_button" => "",
+                "acfe_group_modal_size" => "large",
+            ]),
     ],
     "style" => "",
     "hide_on_screen" => ["the_content"],

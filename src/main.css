@@ -14,6 +14,12 @@
 
 @import "./styles/fonts.css";
 
+@layer base {
+  body {
+    @apply text-neutral-white bg-black;
+  }
+}
+
 @utility debug {
   @apply outline outline-red-500;
 }
