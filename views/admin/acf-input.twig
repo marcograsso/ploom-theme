@@ -1,0 +1,23 @@
+{% set default_attributes = { type: "text" } %}
+{% set final_attributes =
+  default_attributes|merge_attributes(attributes|default({}))
+%}
+
+<div class="relative w-full">
+  {% if label %}
+    <label
+      for="{{ final_attributes.id }}"
+      class="text-purple mb-2 block text-base font-medium"
+    >
+      {{ label }}
+    </label>
+  {% endif %}
+  <input {{ attr(final_attributes) }} />
+  {% if icon %}
+    {{
+      include("views/svgs/" ~ icon ~ ".svg")|attr({
+        class: "absolute bottom-1 right-2 size-[22px]!"
+      })
+    }}
+  {% endif %}
+</div>

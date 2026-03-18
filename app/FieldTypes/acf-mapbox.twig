@@ -1,0 +1,129 @@
+<div class="tailwind">
+  <div
+    class="acf-mapbox-field flex flex-col gap-(--gap-wp) [--gap-wp:15px]"
+    {{
+    attr({
+      data: {
+        "api-key": mapbox_api_key,
+        country: default_country,
+        "field-key": field.key
+      }
+    })
+    }}
+  >
+    <div
+      class="acf-mapbox-form flex flex-col gap-(--gap-wp) pb-(--gap-wp)"
+      autocomplete="off"
+    >
+      {{
+        include(
+          "views/admin/acf-input.twig",
+          {
+            label: __("Indirizzo", "women"),
+            icon: "search",
+            attributes: {
+              id: field.name ~ "[address]",
+              name: field.name ~ "[address]",
+              class: "acf-mapbox-address-value",
+              placeholder: l10n.enter_address,
+              autocomplete: "address-line1",
+              value: value.address
+            }
+          }
+        )
+      }}
+
+      <div class="flex flex-wrap gap-(--gap-wp) md:flex-nowrap">
+        {{
+          include(
+            "views/admin/acf-input.twig",
+            {
+              label: __("Città", "women"),
+              attributes: {
+                id: field.name ~ "[city]",
+                name: field.name ~ "[city]",
+                class: "acf-mapbox-city-value",
+                autocomplete: "address-level2",
+                value: value.city
+              }
+            }
+          )
+        }}
+
+        {{
+          include(
+            "views/admin/acf-input.twig",
+            {
+              label: __("Provincia", "women"),
+              attributes: {
+                id: field.name ~ "[province]",
+                name: field.name ~ "[province]",
+                class: "acf-mapbox-province-value",
+                autocomplete: "address-level1",
+                value: value.province
+              }
+            }
+          )
+        }}
+
+        {{
+          include(
+            "views/admin/acf-input.twig",
+            {
+              label: __("CAP", "women"),
+              attributes: {
+                id: field.name ~ "[cap]",
+                name: field.name ~ "[cap]",
+                class: "acf-mapbox-cap-value",
+                autocomplete: "postal-code",
+                value: value.cap
+              }
+            }
+          )
+        }}
+      </div>
+      <div class="flex gap-(--gap-wp)">
+        {{
+          include(
+            "views/admin/acf-input.twig",
+            {
+              label: __("Latitudine", "women"),
+              attributes: {
+                id: field.name ~ "[latitude]",
+                name: field.name ~ "[latitude]",
+                class: "acf-mapbox-latitude-value",
+                value: value.latitude
+              }
+            }
+          )
+        }}
+
+        {{
+          include(
+            "views/admin/acf-input.twig",
+            {
+              label: __("Longitudine", "women"),
+              attributes: {
+                id: field.name ~ "[longitude]",
+                name: field.name ~ "[longitude]",
+                class: "acf-mapbox-longitude-value",
+                value: value.longitude
+              }
+            }
+          )
+        }}
+      </div>
+    </div>
+
+    <div class="acf-mapbox-minimap-container" style="">
+      <mapbox-address-minimap
+        satellite-toggle="true"
+        {{
+        attr({
+          "show-marker": value.latitude and value.longitude ? "true" : "false"
+        })
+        }}
+      ></mapbox-address-minimap>
+    </div>
+  </div>
+</div>

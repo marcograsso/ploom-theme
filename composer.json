@@ -8,17 +8,15 @@
     }
   },
   "require": {
-    "localghost/twig-hateml": "^0.0.3",
     "spatie/ray": "^1.44.1",
-    "tales-from-a-dev/twig-tailwind-extra": "^1.0.0",
     "timber/timber": "^2.3.3",
-    "twig/html-extra": "^3.22.1",
     "upstatement/routes": "^0.9.2",
     "vinkla/extended-acf": "^14.6",
     "johnbillion/extended-cpts": "^5.1",
     "yiisoft/arrays": "^3.2",
     "yard/wp-hook-registrar": "^2.0",
-    "illuminate/collections": "^12.49"
+    "illuminate/collections": "^12.49",
+    "esheep/twigs": "^0.0.1"
   },
   "require-dev": {
     "php-stubs/acf-pro-stubs": "^6.5",

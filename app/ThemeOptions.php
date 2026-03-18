@@ -9,6 +9,7 @@ use Extended\ACF\Fields\Group;
 use Extended\ACF\Fields\WYSIWYGEditor;
 use Extended\ACF\Location;
 use Extended\ACF\Fields\Tab;
+use Extended\ACF\Fields\Password;
 use Extended\ACF\Fields\TrueFalse;
 
 use Yard\Hook\Action;
@@ -51,6 +52,9 @@ class ThemeOptions
                     ->helperText(
                         "Enable this to show a \"Coming Soon\" mode on the website to everyone except for logged in admins.",
                     ),
+                Password::make("Mapbox API Key", "mapbox_api_key")->helperText(
+                    "Inserisci la chiave API di Mapbox per il tuo sito.",
+                ),
             ],
             "style" => "",
             "location" => [Location::where("options_page", "theme-options")],

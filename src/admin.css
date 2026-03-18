@@ -4,6 +4,10 @@
 .tailwind {
   @import "tailwindcss/utilities.css" layer(utilities) source(none);
 }
+
+@source "../app/FieldTypes";
+@source "../views/admin";
+
 @theme {
   --color-borders: lab(2.75381% 0 0);
 }
@@ -33,3 +37,5 @@ table.widefat {
 #wpadminbar .menupop .ab-sub-wrapper {
   @apply rounded-b;
 }
+
+/* Mapbox Field */

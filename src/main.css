@@ -34,6 +34,7 @@
 
 @utility main-container {
   @apply mx-6 block h-full w-auto md:mx-10 lg:mx-20 xl:mx-28;
+
   @media (min-width: 115rem) {
     max-width: 1600px;
     margin: auto;

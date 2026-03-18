@@ -1,0 +1,27 @@
+.acf-mapbox-field {
+  .acf-mapbox-minimap-container {
+    width: 100%;
+    height: 360px;
+
+    mapbox-address-minimap {
+      div {
+        --border: 1px solid hsl(from #8c8f94 h s l / 0.5);
+        /* --border: none; */
+        --borderRadius: 4px;
+      }
+
+      /* Hide Mapbox credits from the minimap */
+      [aria-label="Mapbox logo"],
+      a[target="_blank"] {
+        display: none;
+      }
+    }
+  }
+}
+
+/* Hide Mapbox credits from the search listbox */
+mapbox-search-listbox {
+  [aria-hidden="true"] {
+    display: none;
+  }
+}

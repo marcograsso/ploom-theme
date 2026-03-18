@@ -5,9 +5,6 @@ namespace App;
 use Timber\Site;
 use Timber\Timber;
 use Timber\URLHelper;
-use localghost\Twig\Extra\Hateml\HatemlExtension;
-use TalesFromADev\Twig\Extra\Tailwind\TailwindExtension;
-use TalesFromADev\Twig\Extra\Tailwind\TailwindRuntime;
 
 use App\Vite;
 use Yard\Hook\Action;
@@ -194,25 +191,8 @@ class Website extends Site
     #[Filter("timber/twig")]
     public function add_to_twig($twig)
     {
-        $twig->addExtension(new HatemlExtension());
-        $twig->addExtension(new \Twig\Extra\Html\HtmlExtension());
-        $twig->addRuntimeLoader(
-            new \Twig\RuntimeLoader\FactoryRuntimeLoader([
-                TailwindRuntime::class => fn() => new TailwindRuntime(),
-            ]),
-        );
-        $twig->addExtension(new TailwindExtension());
+        $twig->addExtension(new \eSheep\Twigs\Extension());
 
-        $twig->addFilter(
-            new \Twig\TwigFilter("ray", function (...$params) {
-                ray(...$params);
-            }),
-        );
-        $twig->addFunction(
-            new \Twig\TwigFunction("ray", function (...$params) {
-                ray(...$params);
-            }),
-        );
         return $twig;
     }
 
