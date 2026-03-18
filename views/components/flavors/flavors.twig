@@ -1,6 +1,8 @@
 <section class="w-full">
-  <div class="main-container">
-    {{ post.flavors_group.title }}
-    {{ include("components/heading.twig") }}
-  </div>
+  {{ include("components/heading.twig", {
+    surtitle: post.flavors_group.surtitle,
+    title: post.flavors_group.title,
+    subtitle: post.flavors_group.subtitle,
+    notes: post.flavors_group.notes
+  }) }}
 </section>

@@ -1,22 +1,49 @@
-<div
-  id="navbar"
-  class="fle-row fixed top-0 z-[40000] flex w-full items-center justify-center gap-[7.5rem] py-4 transition-all duration-500"
->
-  <div id="navbar-blur" class="pointer-events-none absolute inset-0 -z-[1] opacity-0 transition-opacity duration-500"></div>
-  <div id="navbar-border" class="pointer-events-none absolute bottom-0 left-0 h-px w-full"></div>
-  <a
-    href="#flavors"
-    data-scroll-to="#flavors"
-    class="relative cursor-pointer font-sans text-base leading-[125%] font-medium tracking-normal after:absolute after:-bottom-2 after:left-0 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full"
+<div id="navbar" class="absolute top-0 z-[40000] w-full md:fixed">
+  <div
+    class="fle-row flex w-full items-center justify-center gap-[7.5rem] py-4 transition-all duration-500"
   >
-    I nuovi flavors
-  </a>
-  <span class="w-[87px]">{% include "views/svgs/logo-ploom.svg" %}</span>
-  <a
-    href="#experience"
-    data-scroll-to="#experience"
-    class="focusable relative cursor-pointer font-sans text-base leading-[125%] font-medium tracking-normal after:absolute after:-bottom-2 after:left-0 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full"
+    <div
+      id="navbar-blur"
+      class="pointer-events-none absolute inset-0 -z-[1] opacity-0 transition-opacity duration-500"
+    ></div>
+    <a
+      href="#flavors"
+      data-scroll-to="#flavors"
+      class="focusable relative hidden cursor-pointer rounded-sm font-sans text-base leading-[125%] font-medium tracking-normal after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full md:block"
+    >
+      I nuovi flavors
+    </a>
+    <a href="/" class="focusable block w-[89px] rounded-sm px-[2px]">
+      {% include "views/svgs/logo-ploom.svg" %}
+    </a>
+    <a
+      href="#experience"
+      data-scroll-to="#experience"
+      class="focusable relative hidden cursor-pointer rounded-sm font-sans text-base leading-[125%] font-medium tracking-normal after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full md:block"
+    >
+      Ploom Points
+    </a>
+  </div>
+  <div
+    id="navbar-border"
+    class="pointer-events-none h-px w-full md:absolute md:bottom-0 md:left-0"
+  ></div>
+  <div
+    class="flex w-full flex-row items-center justify-center gap-10 py-5 md:hidden"
   >
-    Ploom Points
-  </a>
+    <a
+      href="#flavors"
+      data-scroll-to="#flavors"
+      class="focusable relative cursor-pointer rounded-sm font-sans text-base leading-[125%] font-medium tracking-normal after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full"
+    >
+      I nuovi flavors
+    </a>
+    <a
+      href="#experience"
+      data-scroll-to="#experience"
+      class="focusable relative cursor-pointer rounded-sm font-sans text-base leading-[125%] font-medium tracking-normal after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full"
+    >
+      Ploom Points
+    </a>
+  </div>
 </div>

@@ -1,5 +1,5 @@
 <div class="main-container">
-  <div class="mx-auto my-10 mt-20 lg:w-3/4">
+  <div class="mx-auto my-10 lg:mt-20 lg:w-3/4">
     <div
       class="flex flex-col justify-start gap-2 text-left md:items-center md:justify-center md:text-center"
     >
@@ -7,7 +7,7 @@
         class="w-fit bg-clip-text text-left font-sans text-xl leading-[125%] font-light tracking-normal text-pretty text-transparent uppercase md:text-center 2xl:text-balance"
         style="background-image: linear-gradient(89deg, #03E5B2 2.1%, #6BA1F5 49.82%, #E376FB 98.48%);"
       >
-        NOVITà PLOOM
+        {{ surtitle }}
       </p>
       <div
         class="flex flex-col items-center justify-center gap-6 text-left md:text-center"
@@ -15,20 +15,17 @@
         <h2
           class="text-neutral-white w-full font-sans text-[40px] leading-[125%] font-light tracking-normal [&_br]:hidden sm:[&_br]:inline"
         >
-          I nuovi flavors
+          {{ title }}
         </h2>
         <h3
-          class="text-neutral-white/80 font-sans text-xl leading-[125%] font-light tracking-normal text-pretty 2xl:text-balance [&_b]:font-medium [&_br]:hidden sm:[&_br]:inline [&_strong]:font-medium"
+          class="text-neutral-white/80 font-sans text-xl leading-[125%] font-light tracking-normal text-pretty 2xl:text-balance [&_b]:font-medium [&_br]:hidden sm:[&_br]:inline [&_p]:mb-6 [&_strong]:font-medium"
         >
-          Le nuove stick Lyo sono composte da un mix di erbe naturali* dal
-          sapore morbido, delicato e dolce. Sono perfette per tutti i
-          consumatori adulti che vogliono vivere un'esperienza di gusto
-          autentica, ma senza tabacco.
+          {{ subtitle }}
         </h3>
         <p
           class="text-neutral-white/80 w-full font-sans text-base leading-[125%] font-light tracking-normal text-pretty 2xl:text-balance [&_b]:font-medium [&_br]:hidden sm:[&_br]:inline [&_strong]:font-medium"
         >
-          *Ingredienti specificati sul pacchetto come d a normativa applicabile.
+          {{ notes }}
         </p>
       </div>
     </div>

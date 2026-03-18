@@ -1,5 +1,8 @@
 <section class="w-full">
-  <div class="main-container">
-    {{ post.experience_group.title }}
-  </div>
+  {{ include("components/heading.twig", {
+    surtitle: post.experience_group.surtitle,
+    title: post.experience_group.title,
+    subtitle: post.experience_group.subtitle,
+    notes: post.experience_group.notes
+  }) }}
 </section>
