@@ -29,16 +29,31 @@ if (navbar) {
   window.addEventListener("scroll", onScroll, { passive: true });
 }
 
+const scrollToTarget = (target) => {
+  const el = document.querySelector(target);
+  if (!el) return;
+  const offsetY = (navbar ? navbar.offsetHeight : 0) + 80;
+  gsap.to(window, {
+    duration: 1,
+    scrollTo: { y: el, offsetY },
+    ease: "power3.inOut",
+  });
+};
+
 document.querySelectorAll("[data-scroll-to]").forEach((link) => {
   link.addEventListener("click", (e) => {
     e.preventDefault();
     const target = link.dataset.scrollTo;
-    const el = document.querySelector(target);
-    if (!el) return;
-    gsap.to(window, {
-      duration: 1,
-      scrollTo: { y: el, offsetY: 80 },
-      ease: "power3.inOut",
-    });
+    if (!document.querySelector(target)) {
+      window.location.href = "/" + target;
+      return;
+    }
+    scrollToTarget(target);
   });
 });
+
+if (window.location.hash) {
+  window.addEventListener("load", () => {
+    setTimeout(() => scrollToTarget(window.location.hash), 100);
+  });
+}

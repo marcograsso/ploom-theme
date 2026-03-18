@@ -1,4 +1,4 @@
-<section class="w-full" id="flavors">
+<section class="w-full pb-30" id="flavors">
   {{
     include(
       "components/heading.twig",
@@ -11,7 +11,7 @@
     )
   }}
   <div
-    class="lg:main-container"
+    class="lg:main-container animate-scroll"
     x-data="{ active: 'arctic', mounted: false }"
     x-init="requestAnimationFrame(() => mounted = true)"
     @resize.window.debounce="mounted = false; requestAnimationFrame(() => mounted = true)"
@@ -20,26 +20,22 @@
       class="mt-10 flex w-full flex-col flex-col-reverse items-center justify-center gap-10 lg:mt-20 lg:flex lg:flex-row"
     >
       <div class="w-full flex-1 lg:col-start-1">
-        <img
-          src="{{ theme.link }}/assets/images/ms-product-arcticmint.jpg"
-          class="w-full lg:hidden"
-          x-show="active === 'arctic'"
-        />
-        <img
-          src="{{ theme.link }}/assets/images/ds-product-arcticmint.jpg"
-          class="hidden w-full lg:block"
-          x-show="active === 'arctic'"
-        />
-        <img
-          src="{{ theme.link }}/assets/images/ms-product-wildberry.jpg"
-          class="w-full lg:hidden"
-          x-show="active === 'wild'"
-        />
-        <img
-          src="{{ theme.link }}/assets/images/ds-product-wildberry.jpg"
-          class="hidden w-full lg:block"
-          x-show="active === 'wild'"
-        />
+        <div class="grid">
+          <div
+            class="col-start-1 row-start-1 lg:transition-all lg:duration-500 lg:ease-out"
+            :class="active === 'arctic' ? 'opacity-100 scale-100' : 'lg:opacity-0 lg:scale-95 lg:pointer-events-none'"
+          >
+            <img src="{{ theme.link }}/assets/images/ms-product-arcticmint.jpg" class="w-full lg:hidden" />
+            <img src="{{ theme.link }}/assets/images/ds-product-arcticmint.jpg" class="hidden w-full lg:block" />
+          </div>
+          <div
+            class="col-start-1 row-start-1 lg:transition-all lg:duration-500 lg:ease-out"
+            :class="active === 'wild' ? 'opacity-100 scale-100' : 'lg:opacity-0 lg:scale-95 lg:pointer-events-none'"
+          >
+            <img src="{{ theme.link }}/assets/images/ms-product-wildberry.jpg" class="w-full lg:hidden" />
+            <img src="{{ theme.link }}/assets/images/ds-product-wildberry.jpg" class="hidden w-full lg:block" />
+          </div>
+        </div>
         {# Description Mobile #}
         <div
           class="order-3 mx-6 grid w-auto pt-6! md:mx-10 lg:order-none lg:hidden"
