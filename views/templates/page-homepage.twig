@@ -4,6 +4,10 @@
   <section class="flex w-full">
     {{ include("components/hero/hero.twig") }}
   </section>
-  {{ include("components/flavors/flavors.twig") }}
-  {{ include("components/experience/experience.twig") }}
+  <section class="flex w-full" id="flavors">
+    {{ include("components/flavors/flavors.twig") }}
+  </section>
+  <section class="flex w-full" id="experience">
+    {{ include("components/experience/experience.twig") }}
+  </section>
 {% endblock content %}

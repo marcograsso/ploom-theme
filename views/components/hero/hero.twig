@@ -1,5 +1,5 @@
 <div
-  class="bg-norepeat relative min-h-[762px] w-full bg-black bg-cover bg-center"
+  class="bg-norepeat relative w-full bg-black bg-cover bg-[center_bottom] pt-60 pb-30 lg:pb-60"
   style="background-image: url('{{
   theme.link
   }}/assets/images/ds-hero-bg.jpg');"
@@ -10,13 +10,10 @@
   x-init="updateBg()"
   @resize.window.debounce="updateBg()"
 >
-  <div
-    class="pointer-events-none absolute inset-0"
-    style="background: linear-gradient(180deg, rgba(0, 0, 0, 0) 46.33%, #000000 100%);"
-  ></div>
-  <div class="main-container relative flex items-center justify-center">
+  <div class="main-container relative mb-10 flex items-center justify-center">
     <div
-      class="flex flex-col items-center justify-center text-left md:text-center lg:w-2/3"
+      data-hero
+      class="flex flex-col items-center justify-center text-left md:text-center lg:w-3/4"
     >
       <h1
         class="text-neutral-white mb-[1.5rem] w-full font-sans text-5xl leading-[125%] font-light tracking-normal md:text-6xl [&_br]:hidden sm:[&_br]:inline"

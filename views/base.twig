@@ -9,7 +9,7 @@
     {% if environment == "development" %}
       {{ include("components/tailwind-debugger.twig") }}
     {% endif %}
-
+    {{ include("components/navigation/navbar.twig") }}
     <main>
       {% block content %}
 
