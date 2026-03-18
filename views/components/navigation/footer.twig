@@ -1,0 +1,12 @@
+<div
+  class="bg-norepeat mt-10 h-100 w-full bg-cover bg-[center_top]"
+  style="background-image: url('{{
+  theme.link
+  }}/assets/images/ds-footer-bg.jpg');"
+  data-mobile-bg="{{ theme.link }}/assets/images/ms-footer-bg.jpg"
+  x-data="{ updateBg() { this.$el.style.backgroundImage = window.innerWidth < 768 ? 'url(' + this.$el.dataset.mobileBg + ')' : 'url({{
+  theme.link
+  }}/assets/images/ds-footer-bg.jpg)' } }"
+  x-init="updateBg()"
+  @resize.window.debounce="updateBg()"
+></div>
