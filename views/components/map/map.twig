@@ -1,0 +1,118 @@
+{% set locations =
+  get_posts({
+    post_type: "locations",
+    posts_per_page: -1,
+    orderby: "title",
+    order: "ASC"
+  })
+%}
+
+{% if locations %}
+  <section data-component="section-map" class="mb-20">
+    <div
+      class=""
+      {{
+      attr({
+        "x-data": "MappingLocations("
+          ~ (locations|map(location => location.to_alpine())|json_encode)
+          ~ ")"
+      })
+      }}
+    >
+      <div class="flex flex-col gap-6 lg:flex-row lg:gap-20">
+        {# Map #}
+        <div
+          id="map"
+          class="focusable-inset border-neutral-white/40 h-[50vh] w-3/5 rounded-2xl border lg:h-[60vh]"
+        ></div>
+
+        {# Info panel #}
+        <div class="flex w-full flex-1 flex-col gap-6" x-show="selectedEntity">
+          <div
+            class="flex flex-wrap gap-2"
+            x-show="selectedEntity?.tags?.length && (!selectedEntity?.end_date || selectedEntity.end_date >= new Date().toISOString().slice(0,10))"
+          >
+            <template x-for="tag in selectedEntity?.tags ?? []">
+              <span
+                class="rounded-full px-3 py-1 text-sm font-light"
+                style="border: 1px solid transparent; background: linear-gradient(black, black) padding-box, linear-gradient(89deg, #03E5B2 2.1%, #6BA1F5 49.82%, #E376FB 98.48%) border-box;"
+                x-text="tag"
+              >
+
+              </span>
+            </template>
+          </div>
+          <p
+            class="text-neutral-white bg-neutral-white/20 rounded-sm p-2 text-center text-base font-light"
+            x-show="selectedEntity?.end_date && selectedEntity.end_date < new Date().toISOString().slice(0,10)"
+          >
+            L'esperienza si è conclusa. Grazie per aver partecipato.
+          </p>
+          <h3
+            class="text-3xl leading-[125%] font-light"
+            x-text="$unescape(selectedEntity?.title)"
+          >
+
+          </h3>
+          <div
+            class="flex flex-row items-start gap-3"
+            x-show="selectedEntity?.address"
+          >
+            <span class="w-6">
+              {% include "views/icons/ploom/img-icon-location.svg" %}
+            </span>
+            <div class="flex flex-col gap-2">
+              <p
+                class="text-neutral-white font-sans text-xl leading-[125%] font-medium"
+              >
+                Indirizzo
+              </p>
+              <p
+                class="text-neutral-white/80 font-sans text-xl leading-[125%] font-light"
+                x-text="selectedEntity?.address"
+              ></p>
+            </div>
+          </div>
+          <div
+            class="flex flex-row items-start gap-3"
+            x-show="selectedEntity?.period"
+          >
+            <span class="w-6">
+              {% include "views/icons/ploom/img-icon-calendar.svg" %}
+            </span>
+            <div class="flex flex-col gap-2">
+              <p
+                class="text-neutral-white font-sans text-xl leading-[125%] font-medium"
+              >
+                Periodo
+              </p>
+              <p
+                class="text-neutral-white/80 font-sans text-xl leading-[125%] font-light"
+                x-text="selectedEntity?.period"
+              ></p>
+            </div>
+          </div>
+          <div
+            class="flex flex-row items-start gap-3"
+            x-show="selectedEntity?.hours"
+          >
+            <span class="w-6">
+              {% include "views/icons/ploom/img-icon-clock.svg" %}
+            </span>
+            <div class="flex flex-col gap-2">
+              <p
+                class="text-neutral-white font-sans text-xl leading-[125%] font-medium"
+              >
+                Orari
+              </p>
+              <p
+                class="text-neutral-white/80 font-sans text-xl leading-[125%] font-light"
+                x-text="selectedEntity?.hours"
+              ></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endif %}

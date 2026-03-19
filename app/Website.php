@@ -21,13 +21,15 @@ class Website extends Site
     #[Action("init")]
     public function register_post_types()
     {
-        PostTypes\Example::register();
+        PostTypes\Location::register();
     }
 
     #[Action("init")]
     public function register_taxonomies()
     {
         Taxonomies\ExampleTaxonomy::register();
+        Taxonomies\LocationTag::register();
+        Taxonomies\LocationCity::register();
     }
 
     #[Action("wp_enqueue_scripts")]

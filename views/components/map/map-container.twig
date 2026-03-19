@@ -1,0 +1,39 @@
+<div class="main-container mt-20 flex flex-col gap-6">
+  <!-- Head -->
+  <p class="text-xl font-light">
+    Scegli la tua città
+  </p>
+  <!-- Toggle tabs -->
+  {% set cities = get_terms({ taxonomy: "location-city", hide_empty: true }) %}
+  {% if cities %}
+    <div
+      x-data="{ active: 0, mounted: false, pillLeft: 0, pillWidth: 0 }"
+      x-init="requestAnimationFrame(() => mounted = true)"
+      x-effect="if (mounted) { const btn = $refs.toggleWrap?.querySelectorAll('button')[active]; if (btn) { pillLeft = btn.offsetLeft; pillWidth = btn.offsetWidth; } }"
+      @resize.window.debounce="mounted = false; requestAnimationFrame(() => mounted = true)"
+    >
+      <div
+        class="bg-neutral-white/20 relative flex w-full overflow-x-auto rounded-full p-1 lg:inline-flex lg:w-auto"
+        x-ref="toggleWrap"
+      >
+        <div
+          x-show="mounted"
+          :class="mounted ? 'transition-all duration-300 ease-in-out' : ''"
+          class="bg-neutral-white absolute top-1 bottom-1 rounded-full"
+          :style="`left: ${pillLeft}px; width: ${pillWidth}px`"
+        ></div>
+        {% for city in cities %}
+          <button
+            class="focusable relative z-10 flex-1 cursor-pointer rounded-full px-6 py-3 text-center font-medium whitespace-nowrap lg:flex-none"
+            @click="active = {{ loop.index0 }}"
+            :class="active === {{ loop.index0 }} ? 'text-black' : 'hover:text-neutral-white/80'"
+          >
+            {{ city.name }}
+          </button>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+  <!-- Map -->
+  {{ include("components/map/map.twig") }}
+</div>
