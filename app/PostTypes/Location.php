@@ -94,9 +94,16 @@ class Location extends \Timber\Post
             "address" => get_field("address", $this->ID) ?? "",
             "period" => get_field("period", $this->ID) ?? "",
             "end_date" => ($d = get_field("end_date", $this->ID))
-                ? date("Y-m-d", strtotime($d))
+                ? (
+                    \DateTime::createFromFormat("d/m/Y", $d)
+                        ?: \DateTime::createFromFormat("Ymd", $d)
+                        ?: \DateTime::createFromFormat("Y-m-d", $d)
+                )?->format("Y-m-d") ?? ""
                 : "",
             "hours" => get_field("hours", $this->ID) ?? "",
+            "city" => ($city_terms = get_the_terms($this->ID, "location-city")) && !is_wp_error($city_terms)
+                ? $city_terms[0]->slug
+                : "",
             "location" => [
                 "latitude" => $lat,
                 "longitude" => $lng,

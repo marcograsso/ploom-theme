@@ -20,6 +20,7 @@ Alpine.data("MappingLocations", (entities) => {
     filteredEntities: entities,
     selectedEntityScope: "",
     selectedEntityType: "",
+    selectedCity: "",
     selectedEntity: null,
 
     init() {
@@ -39,6 +40,11 @@ Alpine.data("MappingLocations", (entities) => {
 
       this.addMarkers();
       this.selectEntity(this.entities[0].id, this.entities[0].location);
+
+      window.addEventListener("city-filter", (e) => {
+        this.selectedCity = e.detail.city;
+        this.filterEntities();
+      });
     },
 
     addMarkers() {
@@ -64,8 +70,17 @@ Alpine.data("MappingLocations", (entities) => {
         const path = el.querySelector("path");
         if (path) path.style.fill = color;
 
+        const popup = new mapboxgl.Popup({
+          offset: 28,
+          closeButton: false,
+          className: "map-popup",
+        }).setHTML(
+          `<a href="https://www.google.com/maps/dir/?api=1&destination=${entity.location.latitude},${entity.location.longitude}" target="_blank" rel="noopener noreferrer">Indicazioni</a>`,
+        );
+
         const marker = new mapboxgl.Marker({ element: el })
           .setLngLat([entity.location.longitude, entity.location.latitude])
+          .setPopup(popup)
           .addTo(map);
 
         el.addEventListener("click", () => {
@@ -130,32 +145,56 @@ Alpine.data("MappingLocations", (entities) => {
 
     async filterEntities() {
       this.filteredEntities = this.entities.filter((entity) => {
-        // Only filter by entity scope
-        if (this.selectedEntityScope && !this.selectedEntityType) {
-          return entity.entity_scopes
-            .map((scope) => scope.value)
-            .includes(this.selectedEntityScope);
-        }
-        // Only filter by entity type
-        if (!this.selectedEntityScope && this.selectedEntityType) {
-          return entity.entity_type === this.selectedEntityType;
-        }
-        // Filter by entity scope and entity type
-        if (this.selectedEntityScope && this.selectedEntityType) {
-          return (
-            entity.entity_scopes
-              .map((scope) => scope.value)
-              .includes(this.selectedEntityScope) &&
-            entity.entity_type === this.selectedEntityType
-          );
-        }
-
-        // No filters
+        if (this.selectedCity && entity.city !== this.selectedCity)
+          return false;
+        if (
+          this.selectedEntityScope &&
+          !entity.entity_scopes
+            ?.map((s) => s.value)
+            .includes(this.selectedEntityScope)
+        )
+          return false;
+        if (
+          this.selectedEntityType &&
+          entity.entity_type !== this.selectedEntityType
+        )
+          return false;
         return true;
       });
 
       await this.clearMarkers();
       this.addMarkers();
+
+      if (this.filteredEntities.length > 0) {
+        this.selectEntity(
+          this.filteredEntities[0].id,
+          this.filteredEntities[0].location,
+          false,
+        );
+        this.fitMarkers();
+      } else {
+        this.selectedEntity = null;
+      }
+    },
+
+    fitMarkers() {
+      const coords = this.filteredEntities
+        .filter((e) => e.location?.latitude && e.location?.longitude)
+        .map((e) => [e.location.longitude, e.location.latitude]);
+
+      if (coords.length === 0) return;
+
+      if (coords.length === 1) {
+        map.flyTo({ center: coords[0], zoom: 13, duration: 1000 });
+        return;
+      }
+
+      const bounds = coords.reduce(
+        (b, c) => b.extend(c),
+        new mapboxgl.LngLatBounds(coords[0], coords[0]),
+      );
+
+      map.fitBounds(bounds, { padding: 80, duration: 1000 });
     },
     updateSelectedEntityScope(event) {
       this.selectedEntityScope = event.target.value;
@@ -180,7 +219,7 @@ Alpine.data("MappingLocations", (entities) => {
       };
 
       markers.forEach((marker, i) => {
-        const entity = this.entities[i];
+        const entity = this.filteredEntities[i];
         const isExpired =
           entity?.end_date &&
           entity.end_date < new Date().toISOString().slice(0, 10);

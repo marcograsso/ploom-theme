@@ -4,3 +4,36 @@
 .mapboxgl-ctrl-attrib {
   display: none !important;
 }
+
+.map-popup .mapboxgl-popup-content {
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: 8px;
+  padding: 8px 14px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.map-popup .mapboxgl-popup-content a {
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.map-popup .mapboxgl-popup-content a:hover {
+  text-decoration: underline !important;
+  @apply underline-offset-3;
+}
+
+.map-popup .mapboxgl-popup-content a:focus {
+  outline: none;
+  text-decoration: none;
+}
+
+.map-popup .mapboxgl-popup-content a:focus-visible {
+  outline: none;
+  text-decoration: none;
+}
+.map-popup .mapboxgl-popup-tip {
+  border-top-color: rgba(0, 0, 0, 0.85);
+}

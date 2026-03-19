@@ -8,7 +8,7 @@
   {% if cities %}
     <div
       x-data="{ active: 0, mounted: false, pillLeft: 0, pillWidth: 0 }"
-      x-init="requestAnimationFrame(() => mounted = true)"
+      x-init="requestAnimationFrame(() => { mounted = true; $dispatch('city-filter', { city: '{{ cities[0].slug ?? '' }}' }) })"
       x-effect="if (mounted) { const btn = $refs.toggleWrap?.querySelectorAll('button')[active]; if (btn) { pillLeft = btn.offsetLeft; pillWidth = btn.offsetWidth; } }"
       @resize.window.debounce="mounted = false; requestAnimationFrame(() => mounted = true)"
     >
@@ -25,7 +25,7 @@
         {% for city in cities %}
           <button
             class="focusable relative z-10 flex-1 cursor-pointer rounded-full px-6 py-3 text-center font-medium whitespace-nowrap lg:flex-none"
-            @click="active = {{ loop.index0 }}"
+            @click="active = {{ loop.index0 }}; $dispatch('city-filter', { city: '{{ city.slug }}' })"
             :class="active === {{ loop.index0 }} ? 'text-black' : 'hover:text-neutral-white/80'"
           >
             {{ city.name }}
