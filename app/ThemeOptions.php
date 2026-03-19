@@ -2,11 +2,13 @@
 
 namespace App;
 
-use Extended\ACF\Fields\Image;
+use Extended\ACF\Fields\IconPicker;
 use Extended\ACF\Fields\Text;
 use Extended\ACF\Fields\Textarea;
 use Extended\ACF\Fields\Group;
 use Extended\ACF\Fields\WYSIWYGEditor;
+use Extended\ACF\Fields\Repeater;
+use Extended\ACF\Fields\Url;
 use Extended\ACF\Location;
 use Extended\ACF\Fields\Tab;
 use Extended\ACF\Fields\Password;
@@ -55,6 +57,19 @@ class ThemeOptions
                 Password::make("Mapbox API Key", "mapbox_api_key")->helperText(
                     "Inserisci la chiave API di Mapbox per il tuo sito.",
                 ),
+                Url::make("Privacy Policy URL", "privacy_policy_url"),
+                Url::make("Cookie Policy URL", "cookie_policy_url"),
+                Repeater::make("Social Links", "social_links")
+                    ->helperText("Aggiungi i link ai profili social.")
+                    ->layout("row")
+                    ->fields([
+                        IconPicker::make("Icon")
+                            ->helperText("Aggiungi icona.")
+                            ->format("string"),
+                        Url::make("URL", "url")->helperText(
+                            "Inserisci il link al profilo social.",
+                        ),
+                    ]),
             ],
             "style" => "",
             "location" => [Location::where("options_page", "theme-options")],
