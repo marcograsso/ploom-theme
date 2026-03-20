@@ -10,7 +10,7 @@
   x-init="updateBg()"
   @resize.window.debounce="updateBg()"
 >
-  <div class="main-container flex flex-col gap-10 py-30">
+  <div class="main-container flex flex-col gap-10 pt-30 pb-20">
     {% set social_links = options.social_links %}
     {% set privacy_url = options.privacy_policy_url %}
     {% set cookie_url = options.cookie_policy_url %}
@@ -76,8 +76,5 @@
         </div>
       </div>
     </div>
-    <span class="font-base block leading-[125%] font-light">
-      Legal line lorem ipsum dolor sit amet consectetur
-    </span>
   </div>
 </div>

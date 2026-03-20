@@ -20,6 +20,16 @@
 
     {% block footer %}
       {{ include("components/navigation/footer.twig") }}
+      <div
+        class="main-container fixed! bottom-0! h-fit w-full backdrop-blur-xl"
+      >
+        <span
+          class="font-base container block p-1 text-center text-xs leading-[125%] font-light"
+        >
+          Prodotto solo per 18+. Non privo di rischi. Previsto uso con sticks
+          contenenti nicotina, sostanza che crea dipendenza.
+        </span>
+      </div>
     {% endblock footer %}
 
     {{ function("wp_footer") }}
