@@ -1,0 +1,69 @@
+{% extends "base.twig" %}
+
+{% block navbar %}
+
+{% endblock navbar %}
+{% block footer %}
+
+{% endblock footer %}
+
+{% block content %}
+  <section class="flex w-full">
+    <div
+      class="bg-norepeat relative h-screen min-h-200 w-full bg-black bg-cover bg-[center_bottom] pt-50 pb-25 lg:pt-60 lg:pb-60"
+      style="background-image: url('{{
+      theme.link
+      }}/assets/images/ds-agegate-bg.jpg');"
+      data-mobile-bg="{{ theme.link }}/assets/images/ms-agegate-bg.jpg"
+      x-data="{ updateBg() { this.$el.style.backgroundImage = window.innerWidth < 768 ? 'url(' + this.$el.dataset.mobileBg + ')' : 'url({{
+      theme.link
+      }}/assets/images/ds-agegate-bg.jpg)' } }"
+      x-init="updateBg()"
+      @resize.window.debounce="updateBg()"
+    >
+      <div
+        class="animate-scroll main-container relative mb-10 flex items-center justify-center"
+      >
+        <div
+          class="items-left flex flex-col justify-center text-left lg:w-3/4 lg:items-center lg:text-center"
+        >
+          <span
+            class="focusable mb-[1.5rem] block w-[7.8125rem] rounded-sm px-[2px] lg:w-[11.6875rem]"
+          >
+            {% include "views/svgs/logo-ploom.svg" %}
+          </span>
+          <h1
+            class="text-neutral-white mb-[1.5rem] w-full font-sans text-3xl leading-[125%] font-light tracking-normal [&_br]:hidden sm:[&_br]:inline"
+          >
+            Hai almeno 18 anni?
+          </h1>
+          <h3
+            class="text-neutral-white mb-[3rem] font-sans text-xl leading-[125%] font-light tracking-normal text-balance [&_b]:font-medium [&_br]:hidden sm:[&_br]:inline [&_strong]:font-medium"
+          >
+            Ploom è un prodotto pensato per l’utilizzo da parte di consumatori
+            adulti. È un dispositivo che viene utilizzato con stick di tabacco
+            contenenti nicotina, una sostanza che crea dipendenza. Nonostante
+            non vi sia combustione del tabacco ma solo vaporizzazione tramite
+            riscaldamento dello stick, il prodotto non è privo di rischi per la
+            salute e non può essere considerato come un rimedio per smettere di
+            fumare.
+          </h3>
+          <div class="flex flex-wrap gap-6">
+            <a
+              href="https://www.google.com/"
+              class="focusable transitions-colors text-neutral-white border-neutral-white hover:text-neutral-white/80 flex w-full items-center justify-center gap-2 rounded-[44px] border bg-transparent px-8 py-4 font-sans text-base leading-[125%] font-medium tracking-normal opacity-100 transition-colors duration-300 md:w-fit"
+            >
+              Abbandona
+            </a>
+            <a
+              href="{{ site.url }}/?age_verified=1"
+              class="focusable transitions-colors bg-neutral-white flex w-full items-center justify-center gap-2 rounded-[44px] px-8 py-4 font-sans text-base leading-[125%] font-medium tracking-normal text-black opacity-100 shadow-[0px_0px_16px_0px_#F5F5F599] transition-colors duration-300 hover:text-black/60 md:w-fit"
+            >
+              Ho almeno 18 anni
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock content %}

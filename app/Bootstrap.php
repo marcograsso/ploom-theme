@@ -30,6 +30,7 @@ class Bootstrap
             WordPress\AdminBar::class,
             WordPress\Dashboard::class,
             ThemeOptions::class,
+            AgeGate::class,
         ];
 
         $classes = collect($classes)
