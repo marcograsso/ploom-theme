@@ -57,19 +57,6 @@ register_extended_field_group([
                 "acfe_group_modal_button" => "",
                 "acfe_group_modal_size" => "large",
             ]),
-
-        Tab::make("Maps", "maps_tab"),
-        Group::make("Maps", "maps")->fields([
-            Repeater::make("Posizioni", "locations")->fields([
-                Text::make("Nome", "name"),
-                Mapbox::make("Posizione", "location")
-                    ->helperText(
-                        "Inserisci la posizione della sede o del luogo di ritrovo.",
-                    )
-                    ->mapbox_api_key($mapbox_api_key)
-                    ->default_country("it"),
-            ]),
-        ]),
     ],
     "style" => "",
     "hide_on_screen" => ["the_content"],
