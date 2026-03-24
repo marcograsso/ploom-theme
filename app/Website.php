@@ -190,14 +190,6 @@ class Website extends Site
      *
      * @param Twig\Environment $twig get extension.
      */
-    #[Filter("script_loader_tag")]
-    public function add_iub_compatible_attribute($tag, $handle)
-    {
-        if ($handle === "main") {
-            $tag = str_replace("<script ", '<script data-iub-cs-compatible ', $tag);
-        }
-        return $tag;
-    }
 
     #[Filter("timber/twig")]
     public function add_to_twig($twig)
