@@ -170,14 +170,8 @@ class WordPress
     #[Filter("redirect_canonical", 0, 1)]
     public function disable_attachment_canonical_redirect_url(
         string $url,
-    ): string|false {
-        if (is_attachment()) {
-            global $wp_query;
-            $wp_query->set_404();
-            status_header(404);
-            nocache_headers();
-            return false;
-        }
+    ): string {
+        attachment_redirect_not_found();
 
         return $url;
     }

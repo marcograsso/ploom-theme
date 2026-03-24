@@ -32,36 +32,38 @@ class AgeGate
             return;
         }
 
-        // Skip if coming soon mode is active — it takes priority
-        if (get_field("enable_coming_soon", "option")) {
+        // Skip redirect if already on age-gate page
+        if ($this->is_age_gate_page()) {
             return;
         }
 
-        // Cookie already set — no redirect needed
-        if (!empty($_COOKIE[self::COOKIE_NAME])) {
-            return;
+        // Redirect to age-gate if cookie not set
+        if (empty($_COOKIE[self::COOKIE_NAME])) {
+            wp_safe_redirect(home_url("/" . $this->get_age_gate_slug() . "/"));
+            exit();
         }
-
-        $age_gate_id = $this->get_age_gate_page_id();
-
-        // No age-gate page found — bail to avoid redirect loops
-        if (!$age_gate_id) {
-            return;
-        }
-
-        // Already on age-gate page — do not redirect
-        if (is_page($age_gate_id)) {
-            return;
-        }
-
-        wp_safe_redirect(get_permalink($age_gate_id));
-        exit();
     }
 
-    private function get_age_gate_page_id(): ?int
+    private function is_age_gate_page(): bool
     {
-        $page = get_page_by_path("age-gate");
+        $queried = get_queried_object();
 
-        return $page instanceof \WP_Post ? $page->ID : null;
+        return $queried instanceof \WP_Post &&
+            $queried->post_name === $this->get_age_gate_slug();
+    }
+
+    private function get_age_gate_slug(): string
+    {
+        $pages = get_pages([
+            "meta_key" => "_wp_page_template",
+            "meta_value" => "views/templates/page-age-gate.twig",
+            "number" => 1,
+        ]);
+
+        if (!empty($pages)) {
+            return $pages[0]->post_name;
+        }
+
+        return "age-gate";
     }
 }
