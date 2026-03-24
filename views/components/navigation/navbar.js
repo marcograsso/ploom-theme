@@ -32,7 +32,8 @@ if (navbar) {
 const scrollToTarget = (target) => {
   const el = document.querySelector(target);
   if (!el) return;
-  const offsetY = (navbar ? navbar.offsetHeight : 0) + 80;
+  const isMobile = window.innerWidth < 768;
+  const offsetY = isMobile ? 60 : (navbar ? navbar.offsetHeight : 0) + 80;
   gsap.to(window, {
     duration: 1,
     scrollTo: { y: el, offsetY },
