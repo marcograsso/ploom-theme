@@ -150,32 +150,6 @@ class WordPress
         remove_action("wp_body_open", "wp_global_styles_render_svg_filters");
     }
 
-    // Disable attachment template loading and redirect to 404.
-    // WordPress 6.4 introduced an update to disable attachment pages, but this
-    // implementation is not as robust as the current one.
-    // https://github.com/joppuyo/disable-media-pages/issues/41
-    // https://make.wordpress.org/core/2023/10/16/changes-to-attachment-pages/
-    #[Filter("template_redirect")]
-    public function attachment_redirect_not_found(): void
-    {
-        if (is_attachment()) {
-            global $wp_query;
-            $wp_query->set_404();
-            status_header(404);
-            nocache_headers();
-        }
-    }
-
-    // Disable attachment canonical redirect links.
-    #[Filter("redirect_canonical", 0, 1)]
-    public function disable_attachment_canonical_redirect_url(
-        string $url,
-    ): string {
-        attachment_redirect_not_found();
-
-        return $url;
-    }
-
     // Disable attachment links.
     #[Filter("attachment_link", 10, 2)]
     public function disable_attachment_link(string $url, int $id): string

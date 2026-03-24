@@ -11,15 +11,9 @@
   <section class="flex w-full">
     <div
       class="bg-norepeat relative h-screen min-h-200 w-full bg-black bg-cover bg-[center_bottom] pt-50 pb-25 lg:pt-60 lg:pb-60"
-      style="background-image: url('{{
-      theme.link
-      }}/assets/images/ds-agegate-bg.jpg');"
-      data-mobile-bg="{{ theme.link }}/assets/images/ms-agegate-bg.jpg"
-      x-data="{ updateBg() { this.$el.style.backgroundImage = window.innerWidth < 768 ? 'url(' + this.$el.dataset.mobileBg + ')' : 'url({{
-      theme.link
-      }}/assets/images/ds-agegate-bg.jpg)' } }"
-      x-init="updateBg()"
-      @resize.window.debounce="updateBg()"
+      x-data
+      :style="'background-image: url(' + (window.innerWidth < 768 ? '{{ theme.link }}/assets/images/ms-agegate-bg.jpg' : '{{ theme.link }}/assets/images/ds-agegate-bg.jpg') + ')'"
+      @resize.window.debounce="$el.style.backgroundImage = 'url(' + (window.innerWidth < 768 ? '{{ theme.link }}/assets/images/ms-agegate-bg.jpg' : '{{ theme.link }}/assets/images/ds-agegate-bg.jpg') + ')'"
     >
       <div
         class="animate-scroll main-container relative mb-10 flex items-center justify-center"
@@ -56,7 +50,7 @@
               Abbandona
             </a>
             <a
-              href="{{ site.url }}/?age_verified=1"
+              href="{{ site.url ~ '/?age_verified=1' }}"
               class="focusable transitions-colors bg-neutral-white flex w-full items-center justify-center gap-2 rounded-[44px] px-8 py-4 font-sans text-base leading-[125%] font-medium tracking-normal text-black opacity-100 shadow-[0px_0px_16px_0px_#F5F5F599] transition-colors duration-300 hover:text-black/60 md:w-fit"
             >
               Ho almeno 18 anni

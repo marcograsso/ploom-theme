@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App;
 
 use Yard\Hook\Action;
@@ -8,62 +10,52 @@ class AgeGate
 {
     private const COOKIE_NAME = "ploom_age_verified";
     private const COOKIE_DURATION = 30 * DAY_IN_SECONDS;
+    private const PAGE_SLUG = "age-gate";
 
     #[Action("template_redirect")]
     public function handle(): void
     {
-        // Set cookie and redirect to home when user confirms age
+        if ($this->should_skip()) {
+            return;
+        }
+
         if (isset($_GET["age_verified"])) {
-            setcookie(
-                self::COOKIE_NAME,
-                "1",
-                time() + self::COOKIE_DURATION,
-                "/",
-                "",
-                is_ssl(),
-                true,
-            );
+            $this->set_cookie();
             wp_safe_redirect(home_url("/"));
             exit();
         }
 
-        // Skip redirect for admin and REST API
-        if (is_admin() || (defined("REST_REQUEST") && REST_REQUEST)) {
-            return;
+        $has_cookie = !empty($_COOKIE[self::COOKIE_NAME]);
+        $is_age_gate = is_page(self::PAGE_SLUG);
+
+        if ($has_cookie && $is_age_gate) {
+            wp_safe_redirect(home_url("/"));
+            exit();
         }
 
-        // Skip redirect if already on age-gate page
-        if ($this->is_age_gate_page()) {
-            return;
-        }
-
-        // Redirect to age-gate if cookie not set
-        if (empty($_COOKIE[self::COOKIE_NAME])) {
-            wp_safe_redirect(home_url("/" . $this->get_age_gate_slug() . "/"));
+        if (!$has_cookie && !$is_age_gate) {
+            wp_safe_redirect(home_url("/" . self::PAGE_SLUG . "/"));
             exit();
         }
     }
 
-    private function is_age_gate_page(): bool
+    private function should_skip(): bool
     {
-        $queried = get_queried_object();
-
-        return $queried instanceof \WP_Post &&
-            $queried->post_name === $this->get_age_gate_slug();
+        return is_admin() ||
+            wp_doing_ajax() ||
+            wp_doing_cron() ||
+            (defined("REST_REQUEST") && REST_REQUEST) ||
+            (defined("WP_CLI") && WP_CLI);
     }
 
-    private function get_age_gate_slug(): string
+    private function set_cookie(): void
     {
-        $pages = get_pages([
-            "meta_key" => "_wp_page_template",
-            "meta_value" => "views/templates/page-age-gate.twig",
-            "number" => 1,
+        setcookie(self::COOKIE_NAME, "1", [
+            "expires" => time() + self::COOKIE_DURATION,
+            "path" => "/",
+            "secure" => is_ssl(),
+            "httponly" => true,
+            "samesite" => "Lax",
         ]);
-
-        if (!empty($pages)) {
-            return $pages[0]->post_name;
-        }
-
-        return "age-gate";
     }
 }
